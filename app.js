@@ -71,7 +71,14 @@ function showCalendar(month, year) {
           ui_day.classList.add("today");
         } // color today's date
 
-        ui_day.innerHTML = `<span>${date}<span>`;
+        ui_day.innerHTML = `
+          <span>${date}</span>
+          <div class="options">
+            <label><input type="checkbox">Matin</label>
+            <label><input type="checkbox">Aprèm</label>
+            <label><input type="checkbox">Soir</label>
+          </div>
+        `;
 
         ui_day.dataset.date = `${year}-${month + 1}-${date}`;
         ui_day.dataset.dayofweek = days[currDay];

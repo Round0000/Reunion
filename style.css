@@ -21,22 +21,35 @@ button {
   text-align: center;
   color: white;
   font-size: 1.75rem;
+  margin-top: .5em;
 }
 
 #ui_calendar {
   list-style: none;
   margin: 1em;
-  max-width: 20em;
+  max-width: 24em;
   margin: auto;
 }
 
 #ui_calendar li {
-  padding: 0.25em 0.5em;
   position: relative;
   box-shadow: 1px 1px 2px #0005;
-  margin-bottom: .25em;
+  margin-bottom: 0.3em;
   background-color: white;
+  border-radius: 4px;
+  display: flex;
+  background-color: aliceblue;
+}
 
+#ui_calendar li > span {
+  display: block;
+  padding: .5em .75em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #111;
+  width: 3em;
+  font-weight: bold;
 }
 
 #ui_calendar li::before {
@@ -53,7 +66,7 @@ button {
 }
 
 .today {
-  outline: 3px solid orange;
+    outline: 3px solid orange;
 }
 
 #ui_calendar li[data-dayofweek="Dim"] {
@@ -62,7 +75,7 @@ button {
 
 #ui_calendar li[data-dayofweek="Sam"],
 #ui_calendar li[data-dayofweek="Dim"] {
-  background-color: pink;
+  background-color: hsl(350, 30%, 95%);
 }
 
 .buttons {
@@ -73,4 +86,22 @@ button {
 .buttons button {
   margin: 0.2em;
   padding: 0.25em 1em;
+}
+
+#ui_calendar li .options {
+    display: flex;
+    padding: .25em;
+    flex: 1;
+    gap: 1em;
+}
+
+#ui_calendar li label {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    box-shadow: inset 1px 1px 2px #0005;
+    padding: .5em .8em;
+    background-color: white;
+    border-radius: 2px;
+    flex: 1;
 }
