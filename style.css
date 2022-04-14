@@ -1,0 +1,76 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Atkinson Hyperlegible", Tahoma, sans-serif;
+  background-color: #111;
+}
+
+input,
+button {
+  font-family: inherit;
+}
+
+/*****************/
+#ui_date {
+  text-align: center;
+  color: white;
+  font-size: 1.75rem;
+}
+
+#ui_calendar {
+  list-style: none;
+  margin: 1em;
+  max-width: 20em;
+  margin: auto;
+}
+
+#ui_calendar li {
+  padding: 0.25em 0.5em;
+  position: relative;
+  box-shadow: 1px 1px 2px #0005;
+  margin-bottom: .25em;
+  background-color: white;
+
+}
+
+#ui_calendar li::before {
+  position: absolute;
+  content: attr(data-dayofweek);
+  right: 100%;
+  bottom: 0;
+  top: 0;
+  width: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+}
+
+.today {
+  outline: 3px solid orange;
+}
+
+#ui_calendar li[data-dayofweek="Dim"] {
+  margin-bottom: 0.75em;
+}
+
+#ui_calendar li[data-dayofweek="Sam"],
+#ui_calendar li[data-dayofweek="Dim"] {
+  background-color: pink;
+}
+
+.buttons {
+  width: max-content;
+  margin: 0 auto 0.75em;
+}
+
+.buttons button {
+  margin: 0.2em;
+  padding: 0.25em 1em;
+}
