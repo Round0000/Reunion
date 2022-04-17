@@ -4,6 +4,8 @@ let currentYear = today.getFullYear();
 const selectYear = document.getElementById("year");
 const selectMonth = document.getElementById("month");
 
+let postToday = false;
+
 const months = [
   "Janvier",
   "Février",
@@ -19,28 +21,18 @@ const months = [
   "Décembre",
 ];
 
-const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+const days = [
+  "Lundi",
+  "Mardi",
+  "Mercredi",
+  "Jeudi",
+  "Vendredi",
+  "Samedi",
+  "Dimanche",
+];
 
-function next() {
-  currentYear = currentMonth === 11 ? currentYear + 1 : currentYear;
-  currentMonth = (currentMonth + 1) % 12;
-  showCalendar(currentMonth, currentYear);
-}
-
-function previous() {
-  currentYear = currentMonth === 0 ? currentYear - 1 : currentYear;
-  currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
-  showCalendar(currentMonth, currentYear);
-}
-
-function jump() {
-  currentYear = parseInt(selectYear.value);
-  currentMonth = parseInt(selectMonth.value);
-  showCalendar(currentMonth, currentYear);
-}
-
-function showCalendar(month, year) {
-  // ui_date.innerText = `${months[month]} ${year}`;
+function getCalendar(month, year) {
+  const arr = [];
 
   const ui_month = document.createElement("h2");
   ui_month.innerText = `${months[month]} ${year}`;
@@ -57,9 +49,6 @@ function showCalendar(month, year) {
     return 32 - new Date(iYear, iMonth, 32).getDate();
   }
 
-  // clearing all previous cells
-  // ui_calendar.innerHTML = "";
-
   // creating all cells
   let date = 1;
   for (let i = 0; i < 6; i++) {
@@ -69,28 +58,24 @@ function showCalendar(month, year) {
       if (date > daysInMonth(month, year)) {
         break;
       } else {
-        ui_day = document.createElement("li");
         if (
           date === today.getDate() &&
           year === today.getFullYear() &&
           month === today.getMonth()
         ) {
-          ui_day.classList.add("today");
-        } // color today's date
+          postToday = true;
+        }
 
-        ui_day.dataset.date = `${year}-${month + 1}-${date}`;
-        ui_day.dataset.dayofweek = days[currDay];
+        if (postToday) {
+          ui_day = document.createElement("li");
+          ui_day.dataset.date = `${year}-${month + 1}-${date}`;
+          ui_day.dataset.dayofweek = days[currDay];
 
-        ui_day.innerHTML = `
-          <span>${date}</span>
-          <div class="options">
-            <label><input name="${ui_day.dataset.date}" data-time="matin" type="checkbox">Matin</label>
-            <label><input name="${ui_day.dataset.date}" data-time="aprem" type="checkbox">Aprèm</label>
-            <label><input name="${ui_day.dataset.date}" data-time="soir" type="checkbox">Soir</label>
-          </div>
-        `;
-
-        // console.log(new Date(`${year}-${month + 1}-${date}`));
+          arr.push({
+            date: `${year}-${month + 1}-${date}`,
+            dayofweek: days[currDay],
+          });
+        }
 
         if (currDay === 6) {
           currDay = 0;
@@ -98,18 +83,58 @@ function showCalendar(month, year) {
           currDay++;
         }
 
-        ui_calendar.append(ui_day);
-
         date++;
       }
     }
-
-    // tbl.appendChild(row); // appending each row into calendar body.
   }
+
+  return arr;
 }
 
-showCalendar(currentMonth, currentYear);
-next();
+console.log(getCalendar(currentMonth, currentYear));
+
+function next() {
+  currentYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+  currentMonth = (currentMonth + 1) % 12;
+  getCalendar(currentMonth, currentYear);
+  console.log(getCalendar(currentMonth, currentYear));
+}
+
+function previous() {
+  currentYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+  currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+  getCalendar(currentMonth, currentYear);
+  console.log(getCalendar(currentMonth, currentYear));
+}
+
+function jump() {
+  currentYear = parseInt(selectYear.value);
+  currentMonth = parseInt(selectMonth.value);
+  getCalendar(currentMonth, currentYear);
+}
+//
+
+// ui_day.innerHTML = `
+//           <span>${date}</span>
+//           <span>${days[currDay]}</span>
+
+//           <div class="options">
+//             <label><input name="${ui_day.dataset.date}" data-time="matin" type="checkbox">Matin</label>
+//             <label><input name="${ui_day.dataset.date}" data-time="aprem" type="checkbox">Aprèm</label>
+//             <label><input name="${ui_day.dataset.date}" data-time="soir" type="checkbox">Soir</label>
+//           </div>
+//         `;
+
+// ui_calendar.append(ui_day);
+
+//
+
+
+
+// showCalendar(currentMonth, currentYear);
+// calendArray = getCalendar(currentMonth, currentYear);
+
+// next();
 
 btn_prev.addEventListener("click", (e) => {
   e.preventDefault();
@@ -131,29 +156,34 @@ function formData2obj(fd) {
   return obj;
 }
 
-creation_form.addEventListener('submit', e => {
+creation_form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const data = formData2obj(new FormData(e.target))
+  const data = formData2obj(new FormData(e.target));
 
   const selection = {};
 
-
   const selectedDates = Object.keys(data);
 
-  selectedDates.forEach(date => {
+  selectedDates.forEach((date) => {
     const dateEl = document.querySelector(`[data-date="${date}"]`);
-    
-    const selectedTimes = dateEl.querySelectorAll('input:checked');
+
+    const selectedTimes = dateEl.querySelectorAll("input:checked");
     selection[dateEl.dataset.date] = [];
-    
-    selectedTimes.forEach(input => {
 
+    selectedTimes.forEach((input) => {
       selection[dateEl.dataset.date].push(input.dataset.time);
+    });
+  });
 
-    })
-  })
+  console.log(selection);
+  console.table(selection);
 
-  console.log(selection)
+  Object.keys(selection).forEach((date) => {
+    const newOption = document.createElement("li");
+    newOption.innerText = date;
+    response_list.append(newOption);
+  });
+});
 
-})
+//
