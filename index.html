@@ -8,33 +8,16 @@
     <title>Reunion</title>
   </head>
   <body>
-    <h1 id="ui_date"></h1>
-
-    <ul id="months_nav"></ul>
-
-    <div class="buttons">
-      <button id="btn_prev">Prev</button>
-      <button id="btn_next">Next</button>
-    </div>
-    <form id="creation_form">
-      <button type="submit">Valider</button>
-      <ul id="ui_calendar"></ul>
-    </form>
-
-    <div id="backToTop-container">
-      <a id="backToTop" href="#">Retour en haut</a>
-    </div>
-
-    <section id="section_response">
-      <ul id="response_list">
-        <li>
-          <span class="response_date">Ven 29</span>
-          <div class="response_options">
-            <input type="checkbox" name="">
-          </div>
-        </li>
-      </ul>
+    <section id="section-create_new_calendar">
+      <form>
+        <input type="text" name="title" id="new_title" />
+        <input type="date" name="start" id="new_start" />
+        <input type="date" name="end" id="new_end" />
+        <button type="submit">Créer</button>
+      </form>
     </section>
+
+    <section id="section-edit_new_calendar"></section>
 
     <script src="app.js"></script>
   </body>
