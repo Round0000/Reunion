@@ -34,8 +34,7 @@ function getMonthName(date = new Date(), locale = "fr-FR") {
 //
 
 function displayCalendar(period) {
-
-  const list = document.createElement('ul');
+  const list = document.createElement("ul");
 
   function addMonthTitle(date) {
     const newMonthTitle = document.createElement("h2");
@@ -64,18 +63,24 @@ function displayCalendar(period) {
     }-${date.getDate()}`;
     newItem.innerText = date.getDate() + " " + getDayName(date);
 
-    list.append(newItem)
+    list.append(newItem);
   });
 
-  document.body.append(list);
+  section_editNewCalendar.append(list);
 }
-
-const base = getCalendarData("2022-4-26", "2022-5-9");
-
-displayCalendar(base);
 
 document.addEventListener("click", (e) => {
   if (e.target.matches("li")) {
     console.log(e.target.dataset.date);
   }
+});
+
+ui_initialForm = section_createNewCalendar.querySelector("form");
+
+ui_initialForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const base = getCalendarData(e.target.start.value, e.target.end.value);
+
+  displayCalendar(base);
 });
