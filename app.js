@@ -78,17 +78,18 @@ function showCalendar(month, year) {
           ui_day.classList.add("today");
         } // color today's date
 
+        ui_day.dataset.date = `${year}-${month + 1}-${date}`;
+        ui_day.dataset.dayofweek = days[currDay];
+
         ui_day.innerHTML = `
           <span>${date}</span>
           <div class="options">
-            <label><input type="checkbox">Matin</label>
-            <label><input type="checkbox">Aprèm</label>
-            <label><input type="checkbox">Soir</label>
+            <label><input name="${ui_day.dataset.date}" data-time="matin" type="checkbox">Matin</label>
+            <label><input name="${ui_day.dataset.date}" data-time="aprem" type="checkbox">Aprèm</label>
+            <label><input name="${ui_day.dataset.date}" data-time="soir" type="checkbox">Soir</label>
           </div>
         `;
 
-        ui_day.dataset.date = `${year}-${month + 1}-${date}`;
-        ui_day.dataset.dayofweek = days[currDay];
         // console.log(new Date(`${year}-${month + 1}-${date}`));
 
         if (currDay === 6) {
@@ -120,3 +121,39 @@ btn_next.addEventListener("click", (e) => {
 
   next();
 });
+
+// Form validation
+function formData2obj(fd) {
+  const obj = {};
+  for (key of fd.keys()) {
+    obj[key] = fd.get(key);
+  }
+  return obj;
+}
+
+creation_form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const data = formData2obj(new FormData(e.target))
+
+  const selection = {};
+
+
+  const selectedDates = Object.keys(data);
+
+  selectedDates.forEach(date => {
+    const dateEl = document.querySelector(`[data-date="${date}"]`);
+    
+    const selectedTimes = dateEl.querySelectorAll('input:checked');
+    selection[dateEl.dataset.date] = [];
+    
+    selectedTimes.forEach(input => {
+
+      selection[dateEl.dataset.date].push(input.dataset.time);
+
+    })
+  })
+
+  console.log(selection)
+
+})

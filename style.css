@@ -72,7 +72,7 @@ li+.month-title {
   padding: .75em;
   margin-bottom: 1em;
   list-style: none;
-  position: sticky;
+  position: sticky !important;
   top: 0;
   left: 0;
   right: 0;
@@ -102,6 +102,7 @@ li+.month-title {
   margin: auto;
   padding: .5em;
   padding-left: 3em;
+  padding-bottom: 5em;
 }
 
 #ui_calendar li {
@@ -122,7 +123,7 @@ li+.month-title {
   border-right: 1px solid #111;
   width: 2.5em;
   font-weight: bold;
-  background-color: #ddd;
+  background-color: #eee;
 }
 
 #ui_calendar li::before {
@@ -138,8 +139,8 @@ li+.month-title {
   color: #ccc;
 }
 
-.today {
-  outline: 3px solid orange;
+#ui_calendar li.today {
+  outline-color: orange;
 }
 
 #ui_calendar li[data-dayofweek="Dim"] {
