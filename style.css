@@ -17,21 +17,28 @@ button {
 }
 
 /*****************/
-#backToTop {
+#backToTop-container {
   position: fixed;
-  bottom: 1em;
-  right: 1em;
-  background-color: white;
-  padding: .5em;
-  width: 5em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#backToTop {
+  margin: .5em;
+  padding: 1em 2em;
   border: none;
   line-height: 1;
-  opacity: .5;
+  opacity: .7;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
   font-size: .9rem;
-  color: #111;
+  color: #fff;
 }
 
 #backToTop:hover {
@@ -40,26 +47,42 @@ button {
 
 
 .month-title {
-  text-align: center;
+  text-align: right;
   color: white;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   margin: 1em auto .3em;
+  padding-top: 3em;
 }
 
 #months_nav {
   margin: auto;
   background-color: #333;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 2em;
   padding: .75em;
   margin-bottom: 1em;
   list-style: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+#months_nav li {
+  margin: .5em;
 }
 
 #months_nav a {
   color: orange;
   text-underline-offset: 2px;
+  padding: .5em 1em;
+  transition: background-color .2s;
+}
+
+#months_nav a:hover {
+  background-color: #000;
 }
 
 #ui_calendar {
@@ -68,6 +91,8 @@ button {
   max-width: 28em;
   min-width: 300px;
   margin: auto;
+  padding: .5em;
+  padding-left: 3em;
 }
 
 #ui_calendar li {
@@ -119,7 +144,7 @@ button {
 
 .buttons {
   width: max-content;
-  margin: 0 auto 0.75em;
+  margin: 5em auto 0.75em;
 }
 
 .buttons button {
