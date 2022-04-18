@@ -186,4 +186,4 @@ function initNewCalendar(data) {
 
 //
 
-ui_initialForm.querySelector('button[type="submit"]').click();
+// ui_initialForm.querySelector('button[type="submit"]').click();
