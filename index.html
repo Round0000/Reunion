@@ -11,54 +11,101 @@
     <header id="header">
       <div class="container">
         <h1>Reunion</h1>
+        <button id="menu_toggler">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            class="iconify iconify--ri"
+            width="32"
+            height="32"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z"
+            ></path>
+          </svg>
+        </button>
+        <nav id="menu">
+          <ul></ul>
+        </nav>
       </div>
     </header>
-    
-    <section id="section_createNewCalendar">
-      <div class="container">
-        <h2>Création d'un nouvel agenda</h2>
-        <form>
-          <div>
-            <h3>Intitulé</h3>
-            <div class="form_box">
-              <input
-                type="text"
-                name="title"
-                id="new_title"
-                placeholder="Titre"
-              />
-            </div>
-          </div>
-          <div class="new_period">
-            <h3>Période</h3>
-            <div class="form_box">
-              <div class="form_item">
-                <label for="new_start">Date de début</label>
-                <input type="date" name="start" id="new_start" />
-              </div>
-              <div class="form_item">
-                <label for="new_end">Date de fin</label>
-                <input type="date" name="end" id="new_end" />
-              </div>
-            </div>
-          </div>
-          <div class="form_options">
-            <h3>Créneaux</h3>
-            <span>Cliquer sur [+] pour ajouter un créneau supplémentaire</span>
-            <div class="form_box">
-              <div>
-                <input type="text" placeholder="ex.: 10h30, matin..." />
-                <input type="text" placeholder="ex.: 10h30, matin..." />
-              </div>
-              <button type="button" id="add_new_option">+</button>
-            </div>
-          </div>
-          <button type="submit">Créer</button>
-        </form>
-      </div>
-    </section>
 
-    <section id="section_editNewCalendar"></section>
+    <main>
+      <section id="section_createNewCalendar">
+        <header>
+          <div class="container">
+            <h2>Création d'un nouvel agenda</h2>
+          </div>
+        </header>
+        <div class="container">
+          <form>
+            <div>
+              <h3>Intitulé</h3>
+              <div class="form_box">
+                <input
+                  type="text"
+                  name="title"
+                  id="new_title"
+                  placeholder="Titre"
+                />
+              </div>
+            </div>
+            <div class="new_period">
+              <h3>Période</h3>
+              <div class="form_box">
+                <div class="form_item">
+                  <label for="new_start">Date de début</label>
+                  <input
+                    type="date"
+                    name="start"
+                    id="new_start"
+                    value="2022-04-18"
+                    required
+                  />
+                </div>
+                <div class="form_item">
+                  <label for="new_end">Date de fin</label>
+                  <input
+                    type="date"
+                    name="end"
+                    id="new_end"
+                    value="2022-05-07"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form_options">
+              <h3>Créneaux</h3>
+              <span
+                >Cliquer sur [+] pour ajouter un créneau supplémentaire</span
+              >
+              <div class="form_box">
+                <div>
+                  <input type="text" placeholder="ex.: 10h30, matin..." />
+                </div>
+                <button type="button" id="add_new_option">+</button>
+              </div>
+            </div>
+            <button type="submit">Créer</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="section_editNewCalendar" class="hidden">
+        <header>
+          <div class="container">
+            <h2>Période de sélection</h2>
+          </div>
+        </header>
+        <div class="container"></div>
+      </section>
+    </main>
 
     <script src="app.js"></script>
   </body>

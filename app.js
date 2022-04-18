@@ -33,19 +33,22 @@ function getMonthName(date = new Date(), locale = "fr-FR") {
 
 //
 
-function displayCalendar(period) {
+function displayCalendar(data) {
   const list = document.createElement("ul");
 
   function addMonthTitle(date) {
-    const newMonthTitle = document.createElement("h2");
+    const newMonthTitle = document.createElement("h4");
     newMonthTitle.innerText = getMonthName(date) + " " + date.getFullYear();
     newMonthTitle.classList.add("month_title");
+    newMonthTitle.id = newMonthTitle.innerText.replace(" ", "_");
     list.append(newMonthTitle);
+
+    const newNavMonth = document.createElement("li");
+    newNavMonth.innerHTML = `<a href="#${newMonthTitle.id}">${newMonthTitle.innerText}</a>`;
+    ui_menuList.append(newNavMonth);
   }
 
-  const baseDates = Object.keys(period);
-
-  console.log(baseDates);
+  const baseDates = Object.keys(data.period);
 
   baseDates.forEach((date) => {
     date = new Date(date);
@@ -60,17 +63,55 @@ function displayCalendar(period) {
     }
 
     const newItem = document.createElement("li");
+    newItem.classList.add("date_item");
     newItem.dataset.day = getDayName(date);
     newItem.dataset.date = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}`;
-    newItem.innerText = date.getDate() + " " + getDayName(date);
+    newItem.innerHTML = `
+      <div class="date_item_header">
+      <span class="date_number">${date.getDate()}</span>
+        <span class="date_day">${getDayName(date)}</span>
+      </div>
+      <div class="date_options">
+        <div>
+          <input type="checkbox"" id="${newItem.dataset.date.replaceAll(
+            "-",
+            "_"
+          )}_opt1">
+          <label for="${newItem.dataset.date.replaceAll(
+            "-",
+            "_"
+          )}_opt1">Matin</label>
+        </div>
+        <div>
+          <input type="checkbox"" id="${newItem.dataset.date.replaceAll(
+            "-",
+            "_"
+          )}_opt2">
+          <label for="${newItem.dataset.date.replaceAll(
+            "-",
+            "_"
+          )}_opt2">Aprem</label>
+        </div>
+        <div>
+          <input type="checkbox"" id="${newItem.dataset.date.replaceAll(
+            "-",
+            "_"
+          )}_opt3">
+          <label for="${newItem.dataset.date.replaceAll(
+            "-",
+            "_"
+          )}_opt3">Soir</label>
+        </div>
+      </div>
+    `;
 
     list.append(newItem);
   });
 
-  section_editNewCalendar.innerHTML = "";
-  section_editNewCalendar.append(list);
+  ui_sectionEditNewCalendar.innerHTML = "";
+  ui_sectionEditNewCalendar.append(list);
 }
 
 document.addEventListener("click", (e) => {
@@ -79,20 +120,70 @@ document.addEventListener("click", (e) => {
   }
 });
 
-ui_initialForm = section_createNewCalendar.querySelector("form");
-ui_addAnotherOption = add_new_option;
-ui_initialFormOptions = section_createNewCalendar.querySelector(
+// UI elements
+const ui_sectionCreateNewCalendar = document.getElementById(
+  "section_createNewCalendar"
+);
+const ui_sectionEditNewCalendar = document.querySelector(
+  "#section_editNewCalendar .container:not(header .container)"
+);
+const ui_initialForm = section_createNewCalendar.querySelector("form");
+const ui_addAnotherOption = add_new_option;
+const ui_initialFormOptions = section_createNewCalendar.querySelector(
   ".form_options .form_box div"
 );
+const ui_menuToggler = document.getElementById("menu_toggler");
+const ui_menuList = document.querySelector("#menu ul");
+
+//
+
+ui_menuToggler.addEventListener("click", (e) => {});
 
 ui_initialForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const base = getCalendarData(e.target.start.value, e.target.end.value);
+  const data = {
+    title: e.target.title.value || "Nouvel agenda",
+    start: e.target.start.value,
+    end: e.target.end.value,
+    options: [],
+  };
 
-  displayCalendar(base);
+  e.target.querySelectorAll(".form_options input").forEach((el) => {
+    data.options.push(el.value);
+  });
+
+  initNewCalendar(data);
 });
 
 ui_addAnotherOption.addEventListener("click", (e) => {
-  ui_initialFormOptions.innerHTML += `<input type="text" placeholder="ex.: 10h30, matin..." />`;
+  const newInput = document.createElement("input");
+  newInput.type = "text";
+  newInput.placeholder = "ex.: 10h30, matin...";
+  ui_initialFormOptions.append(newInput);
 });
+
+function transitionTo(el) {
+  document.querySelectorAll("section").forEach((section) => {
+    section.classList.add("hidden");
+  });
+  el.classList.remove("hidden");
+}
+
+function initNewCalendar(data) {
+  console.log(data);
+  const now = new Date();
+  data.id = `${data.title
+    .replaceAll(" ", "")
+    .slice(0, 5)
+    .toUpperCase()}${now.getFullYear()}${
+    now.getMonth() + 1
+  }${now.getDate()}${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
+  data.period = getCalendarData(data.start, data.end);
+  displayCalendar(data);
+  transitionTo(section_editNewCalendar);
+}
+
+//
+
+ui_initialForm.querySelector('button[type="submit"]').click();
