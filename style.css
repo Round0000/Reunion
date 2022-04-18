@@ -11,8 +11,7 @@
 body {
   font-family: "Atkinson Hyperlegible", Tahoma, sans-serif;
   color: #222;
-  background-image: radial-gradient(
-      circle at 69% 86%,
+  background-image: radial-gradient(circle at 69% 86%,
       rgba(165, 165, 165, 0.06) 0%,
       rgba(165, 165, 165, 0.06) 25%,
       rgba(193, 193, 193, 0.06) 25%,
@@ -20,10 +19,8 @@ body {
       rgba(221, 221, 221, 0.06) 50%,
       rgba(221, 221, 221, 0.06) 75%,
       rgba(249, 249, 249, 0.06) 75%,
-      rgba(249, 249, 249, 0.06) 100%
-    ),
-    radial-gradient(
-      circle at 49% 76%,
+      rgba(249, 249, 249, 0.06) 100%),
+    radial-gradient(circle at 49% 76%,
       rgba(129, 129, 129, 0.06) 0%,
       rgba(129, 129, 129, 0.06) 25%,
       rgba(164, 164, 164, 0.06) 25%,
@@ -31,10 +28,8 @@ body {
       rgba(200, 200, 200, 0.06) 50%,
       rgba(200, 200, 200, 0.06) 75%,
       rgba(235, 235, 235, 0.06) 75%,
-      rgba(235, 235, 235, 0.06) 100%
-    ),
-    radial-gradient(
-      circle at 22% 64%,
+      rgba(235, 235, 235, 0.06) 100%),
+    radial-gradient(circle at 22% 64%,
       rgba(173, 173, 173, 0.06) 0%,
       rgba(173, 173, 173, 0.06) 25%,
       rgba(119, 119, 119, 0.06) 25%,
@@ -42,8 +37,7 @@ body {
       rgba(64, 64, 64, 0.06) 50%,
       rgba(64, 64, 64, 0.06) 75%,
       rgba(10, 10, 10, 0.06) 75%,
-      rgba(10, 10, 10, 0.06) 100%
-    ),
+      rgba(10, 10, 10, 0.06) 100%),
     linear-gradient(307deg, rgb(255, 255, 255), rgb(255, 255, 255));
   background-color: hsla(39, 100%, 50%, 0.05);
   background-blend-mode: multiply;
@@ -192,7 +186,7 @@ button:active {
   height: 100vh;
 }
 
-#menu_toggler:focus + #menu {
+#menu_toggler:focus+#menu {
   height: 100vh;
   opacity: 1;
   pointer-events: all;
@@ -226,7 +220,7 @@ section {
   position: relative;
 }
 
-section > .container {
+section>.container {
   background-color: #fff9;
   height: 100%;
   min-height: 78vh;
@@ -258,7 +252,7 @@ section h2 {
   gap: 1em;
 }
 
-#section_createNewCalendar form > div {
+#section_createNewCalendar form>div {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -274,7 +268,7 @@ section h2 {
   font-size: 0.9rem;
 }
 
-.new_period > div {
+.new_period>div {
   display: flex;
   gap: 0.5em;
 }
@@ -314,11 +308,11 @@ form input {
   border: 1px solid #0002;
 }
 
-.form_box > * {
+.form_box>* {
   flex: 1;
 }
 
-.form_box > input {
+.form_box>input {
   width: 100%;
 }
 
@@ -347,17 +341,15 @@ form button[type="submit"] {
   font-size: 1.25rem;
   text-align: right;
   background-color: #0001;
-  background-image: repeating-linear-gradient(
-      135deg,
+  background-image: repeating-linear-gradient(135deg,
       rgba(189, 189, 189, 0.1) 0px,
       rgba(189, 189, 189, 0.1) 2px,
       transparent 2px,
-      transparent 4px
-    ),
+      transparent 4px),
     linear-gradient(90deg, rgb(255, 255, 255), rgb(255, 255, 255));
 }
 
-.date_item + .month_title {
+.date_item+.month_title {
   margin-top: 2em;
 }
 
@@ -373,23 +365,26 @@ form button[type="submit"] {
   transition: all .2s;
 }
 
-.date_item:hover {
-  border-color: #0005;
-  transform: translateY(-1px);
-  box-shadow: 0 1px 3px #0002;
-}
-
 .date_item[data-day="samedi"],
 .date_item[data-day="dimanche"] {
-  background-color: hsla(50, 80%, 95%, 0.5);
+  background-color: hsla(312, 77%, 95%, 0.5);
+}
+
+.date_item:hover {
+  border-color: #0008;
+}
+
+#newCalendarForm_list:hover .date_item:not(:hover) {
+  opacity: .6;
 }
 
 .date_item .date_day {
   text-transform: capitalize;
   text-transform: uppercase;
-  font-size: 0.8rem;
   align-self: center;
   color: #000a;
+  margin-left: auto;
+  font-size: .9rem;
 }
 
 .date_item .date_number {
@@ -398,6 +393,10 @@ form button[type="submit"] {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.date_item .date_month {
+  color: #000a;
 }
 
 .date_options {
@@ -411,8 +410,8 @@ form button[type="submit"] {
   display: flex;
   padding: 0.3em 0.5em;
   gap: 0.5em;
-  justify-content: space-between;
   color: #444;
+  align-items: baseline;
 }
 
 .date_options div {
@@ -423,20 +422,16 @@ form button[type="submit"] {
   display: flex;
   box-shadow: inset 1px 1px 2px #0005;
   margin: 3px;
-  background-image: repeating-linear-gradient(
-      45deg,
+  background-image: repeating-linear-gradient(45deg,
       rgb(255, 255, 255) 0px,
       rgb(255, 255, 255) 10px,
       transparent 10px,
-      transparent 11px
-    ),
-    repeating-linear-gradient(
-      135deg,
+      transparent 11px),
+    repeating-linear-gradient(135deg,
       rgb(255, 255, 255) 0px,
       rgb(255, 255, 255) 10px,
       transparent 10px,
-      transparent 11px
-    ),
+      transparent 11px),
     linear-gradient(90deg, hsl(256, 7%, 84%), hsl(256, 7%, 84%));
 }
 
@@ -455,7 +450,7 @@ form button[type="submit"] {
   transition: all 0.2s;
 }
 
-.date_options input:checked + label {
+.date_options input:checked+label {
   background-color: hsla(210, 100%, 56%, 0.2);
   background-blend-mode: multiply;
 }
@@ -485,4 +480,12 @@ section.hidden #newCalendarForm_actions {
 
 #newCalendarForm_actions button[type="submit"] {
   margin-left: auto;
+}
+
+#action_checkAll,
+#action_uncheckAll {
+  color: #222;
+  align-self: center;
+  margin-right: 1em;
+  padding: .5em;
 }

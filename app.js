@@ -1,3 +1,5 @@
+let currentCalendar;
+
 function getDaysArray(start, end) {
   const arr = [];
   for (
@@ -34,7 +36,7 @@ function getMonthName(date = new Date(), locale = "fr-FR") {
 //
 
 function displayCalendar(data) {
-  const list = document.querySelector('#newCalendarForm_list');
+  const list = document.querySelector("#newCalendarForm_list");
 
   function addMonthTitle(date) {
     const newMonthTitle = document.createElement("h4");
@@ -70,62 +72,53 @@ function displayCalendar(data) {
     }-${date.getDate()}`;
     newItem.innerHTML = `
       <div class="date_item_header">
-      <span class="date_number">${date.getDate()}</span>
+        <span class="date_number">${date.getDate()}</span>
+        <span class="date_month">${getMonthName(date)}</span>
         <span class="date_day">${getDayName(date)}</span>
       </div>
       <div class="date_options">
         <div>
-          <input type="checkbox"" id="${newItem.dataset.date.replaceAll(
+          <input type="checkbox" id="${newItem.dataset.date.replaceAll(
             "-",
             "_"
-          )}_opt1">
+          )}_0">
           <label for="${newItem.dataset.date.replaceAll(
             "-",
             "_"
-          )}_opt1">Matin</label>
+          )}_0">Matin</label>
         </div>
         <div>
-          <input type="checkbox"" id="${newItem.dataset.date.replaceAll(
+          <input type="checkbox" id="${newItem.dataset.date.replaceAll(
             "-",
             "_"
-          )}_opt2">
+          )}_1">
           <label for="${newItem.dataset.date.replaceAll(
             "-",
             "_"
-          )}_opt2">Aprem</label>
+          )}_1">Aprem</label>
         </div>
         <div>
-          <input type="checkbox"" id="${newItem.dataset.date.replaceAll(
+          <input type="checkbox" id="${newItem.dataset.date.replaceAll(
             "-",
             "_"
-          )}_opt3">
+          )}_2">
           <label for="${newItem.dataset.date.replaceAll(
             "-",
             "_"
-          )}_opt3">Soir</label>
+          )}_2">Soir</label>
         </div>
       </div>
     `;
 
     list.append(newItem);
   });
-
-  
 }
-
-document.addEventListener("click", (e) => {
-  if (e.target.matches("li")) {
-    console.log(e.target.dataset.date);
-  }
-});
 
 // UI elements
 const ui_sectionCreateNewCalendar = document.getElementById(
   "section_createNewCalendar"
 );
-const ui_newCalendarForm = document.querySelector(
-  "#newCalendarForm"
-);
+const ui_newCalendarForm = document.querySelector("#newCalendarForm");
 const ui_initialForm = section_createNewCalendar.querySelector("form");
 const ui_addAnotherOption = add_new_option;
 const ui_initialFormOptions = section_createNewCalendar.querySelector(
@@ -170,7 +163,9 @@ function transitionTo(el) {
 }
 
 function initNewCalendar(data) {
-  console.log(data);
+  
+  currentCalendar = data;
+
   const now = new Date();
   data.id = `${data.title
     .replaceAll(" ", "")
@@ -182,6 +177,42 @@ function initNewCalendar(data) {
   displayCalendar(data);
   transitionTo(section_editNewCalendar);
 }
+
+// Submit New Calendar
+function submitNewCalendar(selection) {
+  console.log(selection);
+}
+
+ui_newCalendarForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const checkedOptions = e.target.querySelectorAll(".date_item input:checked");
+  const selection = [];
+
+  checkedOptions.forEach((option) => {
+    const obj = {
+      date: option.closest(".date_item").dataset.date,
+      options: [],
+    };
+    obj.options.push(option.id.split("_")[3]);
+
+    selection.push(obj);
+  });
+
+  submitNewCalendar(selection);
+});
+
+// Check/Uncheck All options
+action_checkAll.addEventListener('click', e => {
+  document.querySelectorAll('.date_item input').forEach(inp => {
+    inp.checked = true;
+  })
+})
+action_uncheckAll.addEventListener('click', e => {
+  document.querySelectorAll('.date_item input').forEach(inp => {
+    inp.checked = false;
+  })
+})
 
 //
 
