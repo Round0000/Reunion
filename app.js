@@ -52,12 +52,15 @@ function displayCalendar(period) {
 
     if (
       date.getDate() === 1 ||
-      date.getDate() === new Date(baseDates[0]).getDate()
+      (date.getDate() === new Date(baseDates[0]).getDate() &&
+        date.getMonth() === new Date(baseDates[0]).getMonth() &&
+        date.getFullYear() === new Date(baseDates[0]).getFullYear())
     ) {
       addMonthTitle(date);
     }
 
     const newItem = document.createElement("li");
+    newItem.dataset.day = getDayName(date);
     newItem.dataset.date = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}`;
@@ -66,6 +69,7 @@ function displayCalendar(period) {
     list.append(newItem);
   });
 
+  section_editNewCalendar.innerHTML = "";
   section_editNewCalendar.append(list);
 }
 
@@ -76,6 +80,10 @@ document.addEventListener("click", (e) => {
 });
 
 ui_initialForm = section_createNewCalendar.querySelector("form");
+ui_addAnotherOption = add_new_option;
+ui_initialFormOptions = section_createNewCalendar.querySelector(
+  ".form_options .form_box div"
+);
 
 ui_initialForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -83,4 +91,8 @@ ui_initialForm.addEventListener("submit", (e) => {
   const base = getCalendarData(e.target.start.value, e.target.end.value);
 
   displayCalendar(base);
+});
+
+ui_addAnotherOption.addEventListener("click", (e) => {
+  ui_initialFormOptions.innerHTML += `<input type="text" placeholder="ex.: 10h30, matin..." />`;
 });
