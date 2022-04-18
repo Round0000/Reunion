@@ -34,7 +34,7 @@ function getMonthName(date = new Date(), locale = "fr-FR") {
 //
 
 function displayCalendar(data) {
-  const list = document.createElement("ul");
+  const list = document.querySelector('#newCalendarForm_list');
 
   function addMonthTitle(date) {
     const newMonthTitle = document.createElement("h4");
@@ -110,8 +110,7 @@ function displayCalendar(data) {
     list.append(newItem);
   });
 
-  ui_sectionEditNewCalendar.innerHTML = "";
-  ui_sectionEditNewCalendar.append(list);
+  
 }
 
 document.addEventListener("click", (e) => {
@@ -124,8 +123,8 @@ document.addEventListener("click", (e) => {
 const ui_sectionCreateNewCalendar = document.getElementById(
   "section_createNewCalendar"
 );
-const ui_sectionEditNewCalendar = document.querySelector(
-  "#section_editNewCalendar .container:not(header .container)"
+const ui_newCalendarForm = document.querySelector(
+  "#newCalendarForm"
 );
 const ui_initialForm = section_createNewCalendar.querySelector("form");
 const ui_addAnotherOption = add_new_option;
@@ -186,4 +185,4 @@ function initNewCalendar(data) {
 
 //
 
-// ui_initialForm.querySelector('button[type="submit"]').click();
+ui_initialForm.querySelector('button[type="submit"]').click();
