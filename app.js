@@ -163,56 +163,73 @@ function transitionTo(el) {
 }
 
 function initNewCalendar(data) {
-  
   currentCalendar = data;
 
   const now = new Date();
   data.id = `${data.title
     .replaceAll(" ", "")
-    .slice(0, 5)
+    .slice(0, 3)
     .toUpperCase()}${now.getFullYear()}${
     now.getMonth() + 1
   }${now.getDate()}${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
   data.period = getCalendarData(data.start, data.end);
   displayCalendar(data);
-  transitionTo(section_editNewCalendar);
+
+  console.log(data);
+  
+  transitionTo(section_calendar);
 }
 
 // Submit New Calendar
-function submitNewCalendar(selection) {
-  console.log(selection);
+function submitNewCalendar(cal, selection) {
+  const finalCal = {
+    id: cal.id,
+    start: cal.start,
+    end: cal.end,
+    title: cal.title,
+    selection: selection,
+  };
+
+  console.table(finalCal);
 }
+
+// 
 
 ui_newCalendarForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const checkedOptions = e.target.querySelectorAll(".date_item input:checked");
+  const dates = e.target.querySelectorAll(".date_item");
   const selection = [];
 
-  checkedOptions.forEach((option) => {
-    const obj = {
-      date: option.closest(".date_item").dataset.date,
-      options: [],
-    };
-    obj.options.push(option.id.split("_")[3]);
+  dates.forEach((item) => {
+    if (item.querySelector("input:checked")) {
+      const obj = {
+        options: [],
+      };
+      obj.date = item.dataset.date;
 
-    selection.push(obj);
+      item.querySelectorAll("input:checked").forEach((option) => {
+        obj.options.push(parseInt(option.id.split("_")[3]));
+      });
+
+      selection.push(obj);
+    }
   });
 
-  submitNewCalendar(selection);
+  submitNewCalendar(currentCalendar, selection);
 });
 
 // Check/Uncheck All options
-action_checkAll.addEventListener('click', e => {
-  document.querySelectorAll('.date_item input').forEach(inp => {
+action_checkAll.addEventListener("click", (e) => {
+  document.querySelectorAll(".date_item input").forEach((inp) => {
     inp.checked = true;
-  })
-})
-action_uncheckAll.addEventListener('click', e => {
-  document.querySelectorAll('.date_item input').forEach(inp => {
+  });
+});
+action_uncheckAll.addEventListener("click", (e) => {
+  document.querySelectorAll(".date_item input").forEach((inp) => {
     inp.checked = false;
-  })
-})
+  });
+});
 
 //
 
