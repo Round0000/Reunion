@@ -173,7 +173,7 @@ function initNewCalendar(data) {
   currentCalendar = data;
 
   const now = new Date();
-  data.id = `${data.title
+  data.id = `_${data.title
     .replaceAll(" ", "")
     .slice(0, 3)
     .toUpperCase()}${now.getFullYear()}${
@@ -203,6 +203,7 @@ function submitNewCalendar(cal, selection) {
   transitionTo(section_newCalendarCheckout);
 
   displayCheckout(finalCal);
+  // createCalendarBin(finalCal);
 }
 
 //
@@ -252,10 +253,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-ui_initialForm.querySelector('button[type="submit"]').click();
-setTimeout(() => {
-  calendarForm_actions.querySelector('button[type="submit"]').click();
-}, 300);
+
 
 //
 
@@ -274,3 +272,11 @@ const copyToClipboard = (str) => {
 checkout_copy.addEventListener("click", (e) => {
   copyToClipboard(checkout_link.href);
 });
+
+// 
+// 
+// 
+// ui_initialForm.querySelector('button[type="submit"]').click();
+// setTimeout(() => {
+//   calendarForm_actions.querySelector('button[type="submit"]').click();
+// }, 300);

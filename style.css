@@ -379,7 +379,7 @@ form button[type="submit"] {
 }
 
 #calendarForm_list:hover .date_item:not(:hover) {
-  opacity: .7;
+  opacity: .9;
 }
 
 .date_item .date_day {
