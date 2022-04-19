@@ -197,9 +197,9 @@ function submitNewCalendar(cal, selection) {
 
   console.table(finalCal);
 
-  displayCalendar(finalCal);
+  ui_main.dataset.mode = "edit";
 
-  // transitionTo(section_calendar_guest);
+  displayCalendar(finalCal);
 }
 
 //
