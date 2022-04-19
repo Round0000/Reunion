@@ -504,31 +504,29 @@ section.hidden #calendarForm_actions {
   text-align: center;
 }
 
-.checkout_instructions {
+#checkout_instructions {
   margin-bottom: 2em;
 }
 
-.checkout_details {
+#checkout_details {
   max-width: 90%;
   margin: auto;
   box-shadow: inset 1px 1px 2px hsla(210, 100%, 10%, .2);
   background-color: hsla(210, 30%, 80%, 0.1);
-  padding: 1em;
-  padding-bottom: 2em;
-  border-radius: 6px; 
+  padding: 1.5em;
 }
 
-.checkout_title {
+#checkout_title {
+  margin-bottom: .25em;
 }
 
-.checkout_period {
-  margin-bottom: 1.5em;
-}
-
-.checkout_link {
-  background-color: rgba(30, 143, 255, 0.4);
+#checkout_link {
+  display: block;
+  width: max-content;
+  margin: 1em auto;
+  background-color: #fff;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: hsl(210, 100%, 10%);
   padding: .5em 1.5em;
   border-radius: 6px;
@@ -537,7 +535,10 @@ section.hidden #calendarForm_actions {
   transition: all .1s;
 }
 
-.checkout_link:hover {
-  box-shadow: none;
-  transform: translateY(2px);
+
+
+#checkout_details button {
+  font-size: 1rem;
+  height: max-content;
+  padding: .5em;
 }

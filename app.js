@@ -233,12 +233,10 @@ ui_calendarForm.addEventListener("submit", (e) => {
 
 // Display checkout
 function displayCheckout(data) {
-  document.querySelector(".checkout_title").innerText = data.title;
-  document.querySelector(".checkout_period").innerText = `
-  Du ${data.start} au ${data.end}
-  `;
-  document.querySelector(".checkout_link").innerText = data.id;
-  document.querySelector(".checkout_link").href = data.id;
+  checkout_title.innerText = data.title;
+  checkout_period.innerText = `Du ${data.start} au ${data.end}`;
+  checkout_link.innerText = data.id;
+  checkout_link.href = "/" + data.id;
 }
 
 // Check/Uncheck All options
@@ -260,3 +258,19 @@ setTimeout(() => {
 }, 300);
 
 //
+
+const copyToClipboard = (str) => {
+  const el = document.createElement("textarea");
+  el.value = str;
+  el.setAttribute("readonly", "");
+  el.style.position = "absolute";
+  el.style.left = "-9999px";
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+};
+
+checkout_copy.addEventListener("click", (e) => {
+  copyToClipboard(checkout_link.href);
+});
