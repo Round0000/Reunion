@@ -498,3 +498,46 @@ section.hidden #calendarForm_actions {
   margin-right: 1em;
   padding: .5em;
 }
+
+/* Checkout */
+#section_newCalendarCheckout>.container {
+  text-align: center;
+}
+
+.checkout_instructions {
+  margin-bottom: 2em;
+}
+
+.checkout_details {
+  max-width: 90%;
+  margin: auto;
+  box-shadow: inset 1px 1px 2px hsla(210, 100%, 10%, .2);
+  background-color: hsla(210, 30%, 80%, 0.1);
+  padding: 1em;
+  padding-bottom: 2em;
+  border-radius: 6px; 
+}
+
+.checkout_title {
+}
+
+.checkout_period {
+  margin-bottom: 1.5em;
+}
+
+.checkout_link {
+  background-color: rgba(30, 143, 255, 0.4);
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: hsl(210, 100%, 10%);
+  padding: .5em 1.5em;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px hsla(210, 100%, 10%, .4);
+  border: 1px solid #0003;
+  transition: all .1s;
+}
+
+.checkout_link:hover {
+  box-shadow: none;
+  transform: translateY(2px);
+}

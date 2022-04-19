@@ -199,7 +199,10 @@ function submitNewCalendar(cal, selection) {
 
   ui_main.dataset.mode = "edit";
 
-  displayCalendar(finalCal);
+  // displayCalendar(finalCal);
+  transitionTo(section_newCalendarCheckout);
+
+  displayCheckout(finalCal);
 }
 
 //
@@ -228,6 +231,16 @@ ui_calendarForm.addEventListener("submit", (e) => {
   submitNewCalendar(currentCalendar, selection);
 });
 
+// Display checkout
+function displayCheckout(data) {
+  document.querySelector(".checkout_title").innerText = data.title;
+  document.querySelector(".checkout_period").innerText = `
+  Du ${data.start} au ${data.end}
+  `;
+  document.querySelector(".checkout_link").innerText = data.id;
+  document.querySelector(".checkout_link").href = data.id;
+}
+
 // Check/Uncheck All options
 document.addEventListener("click", (e) => {
   if (e.target.matches("#action_checkAll")) {
@@ -242,5 +255,8 @@ document.addEventListener("click", (e) => {
 });
 
 ui_initialForm.querySelector('button[type="submit"]').click();
+setTimeout(() => {
+  calendarForm_actions.querySelector('button[type="submit"]').click();
+}, 300);
 
 //
