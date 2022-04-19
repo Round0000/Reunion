@@ -452,6 +452,11 @@ form button[type="submit"] {
   opacity: .7;
 }
 
+.date_options label:hover {
+  color: #000;
+  opacity: 1;
+}
+
 .date_options input:checked+label {
   background-color: hsla(210, 100%, 56%, 0.2);
   background-blend-mode: multiply;

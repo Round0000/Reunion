@@ -13,14 +13,10 @@ function getDaysArray(start, end) {
 }
 
 function getCalendarData(start, end) {
-  const calendar = {};
+  const calendar = [];
 
   getDaysArray(start, end).forEach((date) => {
-    calendar[date] = {
-      matin: null,
-      aprem: null,
-      soir: null,
-    };
+    calendar.push(date);
   });
 
   return calendar;
@@ -36,9 +32,8 @@ function getMonthName(date = new Date(), locale = "fr-FR") {
 //
 
 function displayCalendar(data) {
-  console.log("________", data.selection);
-
   const list = document.querySelector("#calendarForm_list");
+  list.innerHTML = "";
 
   function addMonthTitle(date) {
     const newMonthTitle = document.createElement("h4");
@@ -55,7 +50,7 @@ function displayCalendar(data) {
   const baseDates = [];
 
   if (data.period) {
-    baseDates.push(...Object.keys(data.period));
+    baseDates.push(...data.period);
   }
 
   if (data.selection) {
@@ -187,8 +182,6 @@ function initNewCalendar(data) {
   data.period = getCalendarData(data.start, data.end);
   displayCalendar(data);
 
-  console.log(data);
-
   transitionTo(section_calendar);
 }
 
@@ -248,6 +241,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// ui_initialForm.querySelector('button[type="submit"]').click();
+ui_initialForm.querySelector('button[type="submit"]').click();
 
 //
