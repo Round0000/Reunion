@@ -64,6 +64,10 @@ li {
   display: none !important;
 }
 
+button svg {
+  pointer-events: none;
+}
+
 /* button base styles */
 button {
   align-items: center;
@@ -371,11 +375,11 @@ form button[type="submit"] {
 }
 
 .date_item:hover {
-  border-color: #0008;
+  border-color: #0005;
 }
 
-#newCalendarForm_list:hover .date_item:not(:hover) {
-  opacity: .6;
+#calendarForm_list:hover .date_item:not(:hover) {
+  opacity: .7;
 }
 
 .date_item .date_day {
@@ -419,7 +423,6 @@ form button[type="submit"] {
   display: flex;
   align-items: center;
   position: relative;
-  display: flex;
   box-shadow: inset 1px 1px 2px #0005;
   margin: 3px;
   background-image: repeating-linear-gradient(45deg,
@@ -436,9 +439,7 @@ form button[type="submit"] {
 }
 
 .date_options input {
-  position: absolute;
-  inset: 0;
-  visibility: hidden;
+  display: none;
 }
 
 .date_options label {
@@ -448,14 +449,17 @@ form button[type="submit"] {
   justify-content: center;
   align-items: center;
   transition: all 0.2s;
+  opacity: .7;
 }
 
 .date_options input:checked+label {
   background-color: hsla(210, 100%, 56%, 0.2);
   background-blend-mode: multiply;
+  opacity: 1;
+  color: #000;
 }
 
-#newCalendarForm_actions {
+#calendarForm_actions {
   position: sticky;
   z-index: 10;
   background-color: #fff;
@@ -468,17 +472,17 @@ form button[type="submit"] {
   transform: unset;
 }
 
-#newCalendarForm_actions .container {
+#calendarForm_actions .container {
   padding-top: 1em;
   padding-bottom: 1em;
   display: flex;
 }
 
-section.hidden #newCalendarForm_actions {
+section.hidden #calendarForm_actions {
   transform: translateY(100px);
 }
 
-#newCalendarForm_actions button[type="submit"] {
+#calendarForm_actions button[type="submit"] {
   margin-left: auto;
 }
 

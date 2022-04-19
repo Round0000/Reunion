@@ -36,7 +36,9 @@ function getMonthName(date = new Date(), locale = "fr-FR") {
 //
 
 function displayCalendar(data) {
-  const list = document.querySelector("#newCalendarForm_list");
+  console.log("________", data.selection);
+
+  const list = document.querySelector("#calendarForm_list");
 
   function addMonthTitle(date) {
     const newMonthTitle = document.createElement("h4");
@@ -50,7 +52,17 @@ function displayCalendar(data) {
     ui_menuList.append(newNavMonth);
   }
 
-  const baseDates = Object.keys(data.period);
+  const baseDates = [];
+
+  if (data.period) {
+    baseDates.push(...Object.keys(data.period));
+  }
+
+  if (data.selection) {
+    data.selection.forEach((d) => {
+      baseDates.push(d.date);
+    });
+  }
 
   baseDates.forEach((date) => {
     date = new Date(date);
@@ -118,7 +130,7 @@ function displayCalendar(data) {
 const ui_sectionCreateNewCalendar = document.getElementById(
   "section_createNewCalendar"
 );
-const ui_newCalendarForm = document.querySelector("#newCalendarForm");
+const ui_calendarForm = document.querySelector("#calendarForm");
 const ui_initialForm = section_createNewCalendar.querySelector("form");
 const ui_addAnotherOption = add_new_option;
 const ui_initialFormOptions = section_createNewCalendar.querySelector(
@@ -176,7 +188,7 @@ function initNewCalendar(data) {
   displayCalendar(data);
 
   console.log(data);
-  
+
   transitionTo(section_calendar);
 }
 
@@ -191,11 +203,15 @@ function submitNewCalendar(cal, selection) {
   };
 
   console.table(finalCal);
+
+  displayCalendar(finalCal);
+
+  // transitionTo(section_calendar_guest);
 }
 
-// 
+//
 
-ui_newCalendarForm.addEventListener("submit", (e) => {
+ui_calendarForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const dates = e.target.querySelectorAll(".date_item");
@@ -220,17 +236,18 @@ ui_newCalendarForm.addEventListener("submit", (e) => {
 });
 
 // Check/Uncheck All options
-action_checkAll.addEventListener("click", (e) => {
-  document.querySelectorAll(".date_item input").forEach((inp) => {
-    inp.checked = true;
-  });
+document.addEventListener("click", (e) => {
+  if (e.target.matches("#action_checkAll")) {
+    document.querySelectorAll(".date_item input").forEach((inp) => {
+      inp.checked = true;
+    });
+  } else if (e.target.matches("#action_uncheckAll")) {
+    document.querySelectorAll(".date_item input").forEach((inp) => {
+      inp.checked = false;
+    });
+  }
 });
-action_uncheckAll.addEventListener("click", (e) => {
-  document.querySelectorAll(".date_item input").forEach((inp) => {
-    inp.checked = false;
-  });
-});
+
+// ui_initialForm.querySelector('button[type="submit"]').click();
 
 //
-
-ui_initialForm.querySelector('button[type="submit"]').click();
