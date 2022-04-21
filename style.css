@@ -68,6 +68,10 @@ button svg {
   pointer-events: none;
 }
 
+#images {
+  display: none;
+}
+
 /* button base styles */
 button {
   align-items: center;
