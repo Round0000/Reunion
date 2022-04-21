@@ -420,9 +420,9 @@ form button[type="submit"] {
 
 .date_options div {
   flex: 1;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  position: relative;
   box-shadow: inset 1px 1px 2px #0005;
   margin: 3px;
   background-image: repeating-linear-gradient(45deg,
@@ -439,17 +439,62 @@ form button[type="submit"] {
 }
 
 .date_options input {
-  display: none;
+  all: unset;
+  width: 1.1em;
+  height: 1.1em;
+  margin: .75em;
+  grid-column: 1 / 2;
+  grid-row: 1 / -1; 
+  border: 1px solid #0008;
+  box-shadow: inset 1px 1px 0px #0002;
+  border-radius: 2px;
+  background-color: #fff;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  position: relative;
+  opacity: .7;
 }
+
+.date_options input:focus-visible {
+  outline: 2px solid #000d;
+}
+
+.date_options input:checked {
+  background-image: url(./img/check.svg);
+}
+
+.date_options input[data-state="maybe"]:checked {
+  background-image: url(./img/maybe.svg);
+  background-size: 85%;
+}
+
+/* .date_options input.maybe:checked::before {
+  position: absolute;
+  content: '(';
+  line-height: 1;
+  left: 0;
+  font-size: 1em;
+}
+.date_options input.maybe:checked::after {
+  position: absolute;
+  content: ')';
+  line-height: 1;
+  right: 0;
+  font-size: 1em;
+} */
 
 .date_options label {
   padding: 0.75em 0.5em;
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
   transition: all 0.2s;
-  opacity: .7;
+  opacity: .8;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  padding-left: 2.5em;
+  user-select: none;
 }
 
 .date_options label:hover {
@@ -462,6 +507,10 @@ form button[type="submit"] {
   background-blend-mode: multiply;
   opacity: 1;
   color: #000;
+}
+
+.date_options input[data-state="maybe"]:checked+label {
+  background-color: hsla(51, 100%, 60%, 0.3);
 }
 
 #calendarForm_actions {

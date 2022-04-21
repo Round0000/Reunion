@@ -158,9 +158,11 @@
           </div>
         </header>
         <div class="container">
-          <p id="checkout_instructions">Votre nouvel agenda a bien été créé. Vous pouvez désormais utiliser
+          <p id="checkout_instructions">
+            Votre nouvel agenda a bien été créé. Vous pouvez désormais utiliser
             le lien de partage pour renseigner vos disponibilités et inviter vos
-            collaborateurs à en faire de même.</p>
+            collaborateurs à en faire de même.
+          </p>
           <div id="checkout_details">
             <h3 id="checkout_title"></h3>
             <p id="checkout_period"></p>
@@ -171,7 +173,27 @@
       </section>
     </main>
 
-    <script src="data-management.js"></script>
+    <!-- Firebase -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBN7x3gHWtflqjKx5-bXAiHz96yjMyIIGw",
+        authDomain: "reunion-f4652.firebaseapp.com",
+        projectId: "reunion-f4652",
+        storageBucket: "reunion-f4652.appspot.com",
+        messagingSenderId: "820805976051",
+        appId: "1:820805976051:web:243643e68e1df3db189c86",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
+    <!-- <script src="data-management.js"></script> -->
     <script src="app.js"></script>
   </body>
 </html>

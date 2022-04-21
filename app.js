@@ -85,7 +85,7 @@ function displayCalendar(data) {
       </div>
       <div class="date_options">
         <div>
-          <input type="checkbox" id="${newItem.dataset.date.replaceAll(
+          <input type="checkbox" data-state="null" id="${newItem.dataset.date.replaceAll(
             "-",
             "_"
           )}_0">
@@ -95,7 +95,7 @@ function displayCalendar(data) {
           )}_0">Matin</label>
         </div>
         <div>
-          <input type="checkbox" id="${newItem.dataset.date.replaceAll(
+          <input type="checkbox" data-state="null" id="${newItem.dataset.date.replaceAll(
             "-",
             "_"
           )}_1">
@@ -105,7 +105,7 @@ function displayCalendar(data) {
           )}_1">Aprem</label>
         </div>
         <div>
-          <input type="checkbox" id="${newItem.dataset.date.replaceAll(
+          <input type="checkbox" data-state="null" id="${newItem.dataset.date.replaceAll(
             "-",
             "_"
           )}_2">
@@ -245,15 +245,31 @@ document.addEventListener("click", (e) => {
   if (e.target.matches("#action_checkAll")) {
     document.querySelectorAll(".date_item input").forEach((inp) => {
       inp.checked = true;
+      inp.dataset.state = "checked";
     });
   } else if (e.target.matches("#action_uncheckAll")) {
     document.querySelectorAll(".date_item input").forEach((inp) => {
       inp.checked = false;
+      inp.dataset.state = "null";
     });
   }
 });
 
-
+// Checkbox states
+document.addEventListener("click", (e) => {
+  if (e.target.matches(".date_options input")) {
+    if (e.target.dataset.state === "null") {
+      e.target.checked = true;
+      e.target.dataset.state = "checked";
+    } else if (e.target.dataset.state === "checked") {
+      e.target.checked = true;
+      e.target.dataset.state = "maybe";
+    } else {
+      e.target.checked = false;
+      e.target.dataset.state = "null";
+    }
+  }
+});
 
 //
 
@@ -273,10 +289,10 @@ checkout_copy.addEventListener("click", (e) => {
   copyToClipboard(checkout_link.href);
 });
 
-// 
-// 
-// 
-// ui_initialForm.querySelector('button[type="submit"]').click();
+//
+//
+//
+ui_initialForm.querySelector('button[type="submit"]').click();
 // setTimeout(() => {
 //   calendarForm_actions.querySelector('button[type="submit"]').click();
 // }, 300);
