@@ -151,6 +151,7 @@ ui_addAnotherOption.addEventListener("click", (e) => {
   const newInput = document.createElement("input");
   newInput.type = "text";
   newInput.placeholder = "ex.: 10h30, matin...";
+  newInput.setAttribute('maxlength', "14");
   ui_initialFormOptions.append(newInput);
 });
 

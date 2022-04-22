@@ -408,8 +408,10 @@ form button[type="submit"] {
 }
 
 .date_options {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
   background-color: white;
   box-shadow: 1px 1px 1px #0005;
 }
@@ -424,10 +426,11 @@ form button[type="submit"] {
 
 .date_options div {
   flex: 1;
-  flex-basis: 6em;
+  flex-basis: 4em;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  border: 1px solid #0001;
   box-shadow: inset 1px 1px 2px #0005;
   margin: 3px;
   background-image: repeating-linear-gradient(45deg,
@@ -441,13 +444,14 @@ form button[type="submit"] {
       transparent 10px,
       transparent 11px),
     linear-gradient(90deg, hsl(256, 7%, 84%), hsl(256, 7%, 84%));
+    min-width: max-content;
 }
 
 .date_options input {
   all: unset;
   width: 1.1em;
   height: 1.1em;
-  margin: .75em;
+  margin-left: .75em;
   grid-column: 1 / 2;
   grid-row: 1 / -1; 
   border: 1px solid #0008;
@@ -475,21 +479,6 @@ form button[type="submit"] {
   background-size: 85%;
 }
 
-/* .date_options input.maybe:checked::before {
-  position: absolute;
-  content: '(';
-  line-height: 1;
-  left: 0;
-  font-size: 1em;
-}
-.date_options input.maybe:checked::after {
-  position: absolute;
-  content: ')';
-  line-height: 1;
-  right: 0;
-  font-size: 1em;
-} */
-
 .date_options label {
   padding: 0.75em 0.5em;
   flex: 1;
@@ -500,7 +489,7 @@ form button[type="submit"] {
   grid-row: 1 / -1;
   padding-left: 2.5em;
   user-select: none;
-  line-height: 1.1;
+  line-height: 1;
 }
 
 .date_options label:hover {
