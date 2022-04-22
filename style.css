@@ -424,6 +424,7 @@ form button[type="submit"] {
 
 .date_options div {
   flex: 1;
+  flex-basis: 6em;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -499,6 +500,7 @@ form button[type="submit"] {
   grid-row: 1 / -1;
   padding-left: 2.5em;
   user-select: none;
+  line-height: 1.1;
 }
 
 .date_options label:hover {

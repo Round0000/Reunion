@@ -84,38 +84,24 @@ function displayCalendar(data) {
         <span class="date_day">${getDayName(date)}</span>
       </div>
       <div class="date_options">
-        <div>
-          <input type="checkbox" data-state="null" id="${newItem.dataset.date.replaceAll(
-            "-",
-            "_"
-          )}_0">
-          <label for="${newItem.dataset.date.replaceAll(
-            "-",
-            "_"
-          )}_0">Matin</label>
-        </div>
-        <div>
-          <input type="checkbox" data-state="null" id="${newItem.dataset.date.replaceAll(
-            "-",
-            "_"
-          )}_1">
-          <label for="${newItem.dataset.date.replaceAll(
-            "-",
-            "_"
-          )}_1">Aprem</label>
-        </div>
-        <div>
-          <input type="checkbox" data-state="null" id="${newItem.dataset.date.replaceAll(
-            "-",
-            "_"
-          )}_2">
-          <label for="${newItem.dataset.date.replaceAll(
-            "-",
-            "_"
-          )}_2">Soir</label>
-        </div>
+          
       </div>
     `;
+
+    const optionsBox = newItem.querySelector(".date_options");
+
+    for (i = 0; i < data.options.length; i++) {
+      const div = document.createElement("div");
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.dataset.state = "null";
+      input.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
+      const label = document.createElement("label");
+      label.setAttribute("for", input.id);
+      label.innerText = data.options[i] || "test";
+      div.append(input, label);
+      optionsBox.append(div);
+    }
 
     list.append(newItem);
   });
@@ -149,8 +135,14 @@ ui_initialForm.addEventListener("submit", (e) => {
   };
 
   e.target.querySelectorAll(".form_options input").forEach((el) => {
-    data.options.push(el.value);
+    if (el.value.length > 0) {
+      data.options.push(el.value);
+    }
   });
+
+  if (data.options.length === 0) {
+    data.options.push("Test");
+  }
 
   initNewCalendar(data);
 });
@@ -195,7 +187,7 @@ function submitNewCalendar(cal, selection) {
     selection: selection,
   };
 
-  console.table(finalCal);
+  console.log(finalCal);
 
   ui_main.dataset.mode = "edit";
 
@@ -203,7 +195,6 @@ function submitNewCalendar(cal, selection) {
   transitionTo(section_newCalendarCheckout);
 
   displayCheckout(finalCal);
-  // createCalendarBin(finalCal);
 }
 
 //
@@ -221,8 +212,11 @@ ui_calendarForm.addEventListener("submit", (e) => {
       };
       obj.date = item.dataset.date;
 
-      item.querySelectorAll("input:checked").forEach((option) => {
-        obj.options.push(parseInt(option.id.split("_")[3]));
+      item.querySelectorAll("input:checked").forEach((el) => {
+        obj.options.push({
+          option: parseInt(el.id.split("_")[3]),
+          state: el.dataset.state,
+        });
       });
 
       selection.push(obj);
@@ -292,7 +286,7 @@ checkout_copy.addEventListener("click", (e) => {
 //
 //
 //
-ui_initialForm.querySelector('button[type="submit"]').click();
+// ui_initialForm.querySelector('button[type="submit"]').click();
 // setTimeout(() => {
 //   calendarForm_actions.querySelector('button[type="submit"]').click();
 // }, 300);
