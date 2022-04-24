@@ -206,17 +206,16 @@ button:active {
 
 
 #menu ul {
-  padding: 1em;
+  padding: 2em;
   padding-top: 5vh;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  flex-direction: column;
-  gap: .8em;
+  gap: 1em;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #menu ul li a {
-  padding: 0.5em 1em;
+  padding: 0.3em;
   text-decoration: none;
   color: hsl(235, 30%, 90%);
   font-size: 1.25rem;

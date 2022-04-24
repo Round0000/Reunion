@@ -270,6 +270,9 @@ document.addEventListener("click", (e) => {
 });
 
 // Menu toggler
+menu.style.maxHeight = (window.innerHeight + parseInt(window.getComputedStyle(header).height.split("px")[0])) + "px";
+console.log(menu.style.maxHeight)
+
 ui_menuToggler.addEventListener("click", (e) => {
   menu.classList.toggle("menu-visible");
 });
