@@ -151,7 +151,7 @@ ui_addAnotherOption.addEventListener("click", (e) => {
   const newInput = document.createElement("input");
   newInput.type = "text";
   newInput.placeholder = "ex.: 10h30, matin...";
-  newInput.setAttribute('maxlength', "14");
+  newInput.setAttribute("maxlength", "14");
   ui_initialFormOptions.append(newInput);
 });
 
@@ -163,6 +163,9 @@ function transitionTo(el) {
 }
 
 function initNewCalendar(data) {
+  header_icon.classList.add("hidden");
+  ui_menuToggler.classList.remove("hidden");
+
   currentCalendar = data;
 
   const now = new Date();
@@ -190,9 +193,6 @@ function submitNewCalendar(cal, selection) {
 
   console.log(finalCal);
 
-  ui_main.dataset.mode = "edit";
-
-  // displayCalendar(finalCal);
   transitionTo(section_newCalendarCheckout);
 
   displayCheckout(finalCal);
@@ -256,13 +256,26 @@ document.addEventListener("click", (e) => {
     if (e.target.dataset.state === "null") {
       e.target.checked = true;
       e.target.dataset.state = "checked";
-    } else if (e.target.dataset.state === "checked") {
+    } else if (
+      e.target.dataset.state === "checked" &&
+      ui_main.dataset.mode === "edit"
+    ) {
       e.target.checked = true;
       e.target.dataset.state = "maybe";
     } else {
       e.target.checked = false;
       e.target.dataset.state = "null";
     }
+  }
+});
+
+// Menu toggler
+ui_menuToggler.addEventListener("click", (e) => {
+  menu.classList.toggle("menu-visible");
+});
+menu.addEventListener("click", (e) => {
+  if (e.target.matches("a")) {
+    menu.classList.remove("menu-visible");
   }
 });
 

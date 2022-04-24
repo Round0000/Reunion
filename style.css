@@ -155,6 +155,14 @@ button:active {
   color: orange;
 }
 
+#header_icon {
+  background-image: url(./img/calendar-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 2.5em;
+  width: 2.5em;
+}
+
 #header .container {
   padding-top: 0.75em;
   padding-bottom: 0.75em;
@@ -181,7 +189,7 @@ button:active {
 #menu {
   position: absolute;
   height: 0;
-  background-color: #fff;
+  background-color: hsl(235, 25%, 12%);
   left: 0;
   right: 0;
   top: 100%;
@@ -192,33 +200,31 @@ button:active {
 
 #menu.menu-visible {
   height: 100vh;
-}
-
-#menu_toggler:focus+#menu {
-  height: 100vh;
   opacity: 1;
   pointer-events: all;
 }
 
+
 #menu ul {
   padding: 1em;
-  padding-top: 10vh;
+  padding-top: 5vh;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   flex-direction: column;
-  gap: 1.5em;
+  gap: .8em;
 }
 
 #menu ul li a {
   padding: 0.5em 1em;
   text-decoration: none;
-  color: #222;
+  color: hsl(235, 30%, 90%);
   font-size: 1.25rem;
 }
 
 #menu ul li a:hover {
-  color: #36395a;
+  color: hsl(235, 90%, 95%);
+  text-decoration: underline;
 }
 
 /* Other */
