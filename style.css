@@ -189,7 +189,7 @@ button:active {
 #menu {
   position: absolute;
   height: 0;
-  background-color: hsl(235, 25%, 12%);
+  background-color: hsla(235, 25%, 12%, .9);
   left: 0;
   right: 0;
   top: 100%;

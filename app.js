@@ -1,4 +1,4 @@
-let currentCalendar;
+let currentCalendar = {};
 
 function getDaysArray(start, end) {
   const arr = [];
@@ -189,13 +189,17 @@ function submitNewCalendar(cal, selection) {
     end: cal.end,
     title: cal.title,
     selection: selection,
+    options: cal.options
   };
 
   console.log(finalCal);
 
-  transitionTo(section_newCalendarCheckout);
+  // transitionTo(section_newCalendarCheckout);
 
-  displayCheckout(finalCal);
+  // displayCheckout(finalCal);
+
+  displayCalendar(finalCal);
+  storeCal(finalCal)
 }
 
 //
@@ -258,7 +262,7 @@ document.addEventListener("click", (e) => {
       e.target.dataset.state = "checked";
     } else if (
       e.target.dataset.state === "checked" &&
-      ui_main.dataset.mode === "edit"
+      ui_main.dataset.mode === "public"
     ) {
       e.target.checked = true;
       e.target.dataset.state = "maybe";
@@ -269,9 +273,11 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Menu toggler
-menu.style.maxHeight = (window.innerHeight + parseInt(window.getComputedStyle(header).height.split("px")[0])) + "px";
-console.log(menu.style.maxHeight)
+// Menu
+menu.style.maxHeight =
+  window.innerHeight +
+  parseInt(window.getComputedStyle(header).height.split("px")[0]) +
+  "px";
 
 ui_menuToggler.addEventListener("click", (e) => {
   menu.classList.toggle("menu-visible");
@@ -304,6 +310,7 @@ checkout_copy.addEventListener("click", (e) => {
 //
 //
 // ui_initialForm.querySelector('button[type="submit"]').click();
+// 
 // setTimeout(() => {
 //   calendarForm_actions.querySelector('button[type="submit"]').click();
 // }, 300);
