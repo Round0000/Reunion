@@ -144,7 +144,7 @@ ui_initialForm.addEventListener("submit", (e) => {
     data.options.push("Test");
   }
 
-  initNewCalendar(data);
+  initNewCalendar(data, "admin");
 });
 
 ui_addAnotherOption.addEventListener("click", (e) => {
@@ -162,20 +162,25 @@ function transitionTo(el) {
   el.classList.remove("hidden");
 }
 
-function initNewCalendar(data) {
+function initNewCalendar(data, mode) {
   header_icon.classList.add("hidden");
   ui_menuToggler.classList.remove("hidden");
 
   currentCalendar = data;
 
-  const now = new Date();
-  data.id = `_${data.title
-    .replaceAll(" ", "")
-    .slice(0, 3)
-    .toUpperCase()}${now.getFullYear()}${
-    now.getMonth() + 1
-  }${now.getDate()}${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
-  data.period = getCalendarData(data.start, data.end);
+  ui_main.dataset.mode = mode;
+
+  if (mode === "admin") {
+    const now = new Date();
+    data.id = `_${data.title
+      .replaceAll(" ", "")
+      .slice(0, 3)
+      .toUpperCase()}${now.getFullYear()}${
+      now.getMonth() + 1
+    }${now.getDate()}${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
+    data.period = getCalendarData(data.start, data.end);
+  }
+
   displayCalendar(data);
 
   transitionTo(section_calendar);
@@ -189,7 +194,7 @@ function submitNewCalendar(cal, selection) {
     end: cal.end,
     title: cal.title,
     selection: selection,
-    options: cal.options
+    options: cal.options,
   };
 
   console.log(finalCal);
@@ -199,7 +204,7 @@ function submitNewCalendar(cal, selection) {
   // displayCheckout(finalCal);
 
   displayCalendar(finalCal);
-  storeCal(finalCal)
+  storeCal(finalCal);
 }
 
 //
@@ -310,7 +315,7 @@ checkout_copy.addEventListener("click", (e) => {
 //
 //
 // ui_initialForm.querySelector('button[type="submit"]').click();
-// 
+//
 // setTimeout(() => {
 //   calendarForm_actions.querySelector('button[type="submit"]').click();
 // }, 300);

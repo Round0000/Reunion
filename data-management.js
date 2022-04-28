@@ -7,7 +7,7 @@ if (reunionQuery[1] === "_") {
 
   collection = db.collection(reunionID);
 
-  async function getCollection() {
+  async function getCollection(id) {
     collection
       .get()
       .then((querySnapshot) => {
@@ -18,31 +18,42 @@ if (reunionQuery[1] === "_") {
           localDB.push(item);
         });
 
-        firestoreToCalendar(localDB)
+        firestoreToCalendar(localDB, id);
       })
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
   }
 
-  getCollection();
+  getCollection(reunionID);
 }
 
 // Initial data fetch
 
 function storeCal(data) {
-  db.collection(data.id).doc("base").set({ selection: data.selection });
-
   db.collection(data.id).doc("details").set({
     title: data.title,
     start: data.start,
     end: data.end,
     options: data.options,
+    selection: data.selection,
   });
 }
 
-function firestoreToCalendar(items) {
-  items.forEach((item) => {
-    console.log(item);
+function firestoreToCalendar(items, id) {
+  console.log(items);
+  const obj = { id: id };
+
+  items.forEach((doc) => {
+    if (doc.id === "details") {
+      obj.title = doc.title;
+      obj.start = doc.start;
+      obj.end = doc.end;
+      obj.options = doc.options;
+      obj.selection = doc.selection;
+    }
   });
+
+  console.log(obj);
+  initNewCalendar(obj, "public");
 }
