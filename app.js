@@ -187,7 +187,7 @@ function initNewCalendar(data, mode) {
 }
 
 // Submit New Calendar
-function submitNewCalendar(cal, selection) {
+function submitNewCalendar(cal, selection, mode) {
   const finalCal = {
     id: cal.id,
     start: cal.start,
@@ -199,11 +199,9 @@ function submitNewCalendar(cal, selection) {
 
   console.log(finalCal);
 
-  // transitionTo(section_newCalendarCheckout);
+  transitionTo(section_newCalendarCheckout);
+  displayCheckout(finalCal, mode);
 
-  // displayCheckout(finalCal);
-
-  displayCalendar(finalCal);
   storeCal(finalCal);
 }
 
@@ -240,8 +238,8 @@ ui_calendarForm.addEventListener("submit", (e) => {
 function displayCheckout(data) {
   checkout_title.innerText = data.title;
   checkout_period.innerText = `Du ${data.start} au ${data.end}`;
-  checkout_link.innerText = data.id;
-  checkout_link.href = "/" + data.id;
+  checkout_link.innerText = "Voir le calendrier";
+  checkout_link.href = "http://127.0.0.1:5500/?" + data.id;
 }
 
 // Check/Uncheck All options
