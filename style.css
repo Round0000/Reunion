@@ -284,7 +284,7 @@ section h2 {
 .new_period>div {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5em;
+  gap: 0.5em; 
 }
 
 form input {
@@ -594,16 +594,35 @@ section.hidden #calendarForm_actions {
 }
 
 /* Username Modal */
-#username_label {
-  margin-bottom: 1.5em;
+#public_form_details {
   border: 1px solid #0002;
   box-shadow: 1px 1px 1px #0005;
   background-color: #eee5;
   padding: .5em;
+  margin-bottom: 1.5em;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+}
+
+#public_form_period {
+  color: #333;
+}
+
+#username_label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* border-top: 1px solid #0005; */
+  box-shadow: inset 1px 1px 2px #0003;
+  padding: .5em;
+  margin-top: .5em;
+  background-color: #5551;
 }
 
 #username_input {
-  margin-top: .25em;
+  width: 14em;
+  max-width: 100%;
 }
+
