@@ -28,6 +28,11 @@ function getDayName(date = new Date(), locale = "fr-FR") {
 function getMonthName(date = new Date(), locale = "fr-FR") {
   return date.toLocaleDateString(locale, { month: "long" });
 }
+function formatDate(str) {
+  const date = new Date(str);
+  const formattedDate = date.toLocaleString().split(",")[0];
+  return formattedDate;
+}
 
 //
 
@@ -181,6 +186,11 @@ function initNewCalendar(data, mode) {
     data.period = getCalendarData(data.start, data.end);
   }
 
+  public_form_title.innerText = data.title;
+  public_form_period.innerText = `Du ${formatDate(data.start)} au ${formatDate(
+    data.end
+  )}`;
+
   displayCalendar(data);
 
   transitionTo(section_calendar);
@@ -206,6 +216,18 @@ function submitNewCalendar(cal, selection, mode) {
 }
 
 //
+calendarForm_actions
+  .querySelector('button[type="submit"]')
+  .addEventListener("click", (e) => {
+    if (
+      ui_main.dataset.mode === "public" &&
+      username_input.value.length === 0
+    ) {
+      username_input.required = true;
+      username_input.focus();
+      public_form_details.scrollIntoView();
+    }
+  });
 
 ui_calendarForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -237,7 +259,9 @@ ui_calendarForm.addEventListener("submit", (e) => {
 // Display checkout
 function displayCheckout(data) {
   checkout_title.innerText = data.title;
-  checkout_period.innerText = `Du ${data.start} au ${data.end}`;
+  checkout_period.innerText = `Du ${formatDate(data.start)} au ${formatDate(
+    data.end
+  )}`;
   checkout_link.innerText = "Voir le calendrier";
   checkout_link.href = "http://127.0.0.1:5500/?" + data.id;
 }

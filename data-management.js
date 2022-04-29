@@ -3,6 +3,8 @@ const localDB = [];
 let collection;
 
 if (reunionQuery[1] === "_") {
+  ui_main.dataset.mode = "loading";
+
   const reunionID = reunionQuery.slice(1);
 
   collection = db.collection(reunionID);
@@ -18,7 +20,11 @@ if (reunionQuery[1] === "_") {
           localDB.push(item);
         });
 
-        firestoreToCalendar(localDB, id);
+        if (localDB.length > 0) {
+          firestoreToCalendar(localDB, id);
+        } else {
+          ui_main.dataset.mode = "admin";
+        }
       })
       .catch((error) => {
         console.log("Error getting documents: ", error);
