@@ -245,7 +245,9 @@ ui_calendarForm.addEventListener("submit", (e) => {
       item.querySelectorAll("input:checked").forEach((el) => {
         obj.options.push({
           option: parseInt(el.id.split("_")[3]),
-          state: el.dataset.state,
+          // state: el.dataset.state,
+          members_yes: [],
+          members_maybe: [],
         });
       });
 
