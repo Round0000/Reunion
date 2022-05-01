@@ -64,11 +64,15 @@ function displayCalendar(data) {
     });
   }
 
-  baseDates.forEach((date) => {
+  baseDates.forEach((date, index) => {
+    const prev = new Date(baseDates[index - 1]).getMonth();
+    const curr = new Date(baseDates[index]).getMonth();
+
     date = new Date(date);
 
+
     if (
-      date.getDate() === 1 ||
+      (prev && curr && prev !== curr) ||
       (date.getDate() === new Date(baseDates[0]).getDate() &&
         date.getMonth() === new Date(baseDates[0]).getMonth() &&
         date.getFullYear() === new Date(baseDates[0]).getFullYear())
