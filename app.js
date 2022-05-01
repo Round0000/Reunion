@@ -65,8 +65,10 @@ function displayCalendar(data) {
   }
 
   baseDates.forEach((date, index) => {
-    const prev = new Date(baseDates[index - 1]).getMonth();
-    const curr = new Date(baseDates[index]).getMonth();
+    const prev = new Date(baseDates[index - 1]).getMonth() + 1;
+    const curr = new Date(baseDates[index]).getMonth() + 1;
+
+    console.log("prev " + prev, "curr " + curr)
 
     date = new Date(date);
 
@@ -77,6 +79,7 @@ function displayCalendar(data) {
         date.getMonth() === new Date(baseDates[0]).getMonth() &&
         date.getFullYear() === new Date(baseDates[0]).getFullYear())
     ) {
+      console.log(date)
       addMonthTitle(date);
     }
 
