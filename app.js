@@ -68,18 +68,9 @@ function displayCalendar(data) {
     const prev = new Date(baseDates[index - 1]).getMonth() + 1;
     const curr = new Date(baseDates[index]).getMonth() + 1;
 
-    console.log("prev " + prev, "curr " + curr)
-
     date = new Date(date);
 
-
-    if (
-      (prev && curr && prev !== curr) ||
-      (date.getDate() === new Date(baseDates[0]).getDate() &&
-        date.getMonth() === new Date(baseDates[0]).getMonth() &&
-        date.getFullYear() === new Date(baseDates[0]).getFullYear())
-    ) {
-      console.log(date)
+    if ((prev && curr && prev !== curr) || index === 0) {
       addMonthTitle(date);
     }
 
@@ -219,7 +210,7 @@ function submitNewCalendar(cal, selection, mode) {
   transitionTo(section_newCalendarCheckout);
   displayCheckout(finalCal, mode);
 
-  storeCal(finalCal);
+  storeBaseCal(finalCal);
 }
 
 //

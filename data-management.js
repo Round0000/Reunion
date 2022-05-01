@@ -36,14 +36,16 @@ if (reunionQuery[1] === "_") {
 
 // Initial data fetch
 
-function storeCal(data) {
+function storeBaseCal(data) {
   db.collection(data.id).doc("details").set({
     title: data.title,
     start: data.start,
     end: data.end,
     options: data.options,
-    selection: data.selection,
   });
+  db.collection(data.id)
+    .doc("base")
+    .set({ selection: data.selection, members: new Array() });
 }
 
 function firestoreToCalendar(items, id) {
@@ -56,7 +58,10 @@ function firestoreToCalendar(items, id) {
       obj.start = doc.start;
       obj.end = doc.end;
       obj.options = doc.options;
+    } else if (doc.id === "base") {
       obj.selection = doc.selection;
+      obj.members = doc.members;
+      console.log(doc);
     }
   });
 
