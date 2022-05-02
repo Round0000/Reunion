@@ -287,7 +287,7 @@ section h2 {
 .new_period>div {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5em; 
+  gap: 0.5em;
 }
 
 form input {
@@ -417,8 +417,6 @@ form button[type="submit"] {
 }
 
 .date_options {
-  /* display: flex; */
-  /* flex-wrap: wrap; */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
   background-color: white;
@@ -453,7 +451,7 @@ form button[type="submit"] {
       transparent 10px,
       transparent 11px),
     linear-gradient(90deg, hsl(256, 7%, 84%), hsl(256, 7%, 84%));
-    min-width: max-content;
+  min-width: max-content;
 }
 
 .date_options input {
@@ -462,7 +460,7 @@ form button[type="submit"] {
   height: 1.1em;
   margin-left: .75em;
   grid-column: 1 / 2;
-  grid-row: 1 / -1; 
+  grid-row: 1 / -1;
   border: 1px solid #0008;
   box-shadow: inset 1px 1px 0px #0002;
   border-radius: 2px;
@@ -526,7 +524,7 @@ form button[type="submit"] {
   background-size: 80%;
 }
 
-.date_options input:disabled + label {
+.date_options input:disabled+label {
   pointer-events: none;
   background-color: hsl(10, 30%, 97%);
   color: #0003;
@@ -646,6 +644,71 @@ section.hidden #calendarForm_actions {
   max-width: 100%;
 }
 
-#ui_main[data-mode="public"] #username_label {
+#ui_main[data-mode="edit"] #username_label {
   display: flex;
+}
+
+/* Display mode */
+
+.display_spots li {
+  background-color: white;
+  color: #222;
+  display: grid;
+  gap: .25em;
+  padding: .25em;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: #fff9;
+  border: 1px solid #0002;
+}
+
+.display_spots li+li {
+  margin-top: 1em;
+}
+
+.display_spots li>* {
+  padding: .5em;
+  display: flex;
+  align-items: center;
+  gap: .25em;
+}
+
+.display_spots li img {
+  width: 1.25em;
+  opacity: .9;
+}
+
+.display_spots .spot_title {
+  grid-column: 1 / -1;
+  color: #111;
+  background-image: repeating-linear-gradient(45deg,
+  rgb(255, 255, 255) 0px,
+  rgb(255, 255, 255) 10px,
+  transparent 10px,
+  transparent 11px),
+repeating-linear-gradient(135deg,
+  rgb(255, 255, 255) 0px,
+  rgb(255, 255, 255) 10px,
+  transparent 10px,
+  transparent 11px),
+  linear-gradient(90deg, hsl(256, 7%, 84%), hsl(256, 7%, 84%));
+  /* box-shadow: 1px 1px 2px #0003;   */
+  border: 1px solid #0002;
+  margin-bottom: 0;
+}
+
+.spot_yes {
+  background-color: hsla(210, 100%, 90%);
+  margin-right: 0;
+  border: 1px solid #0003;  
+}
+
+.spot_maybe {
+  background-color: hsla(51, 100%, 90%);
+  margin-right: 0;
+  border: 1px solid #0003;
+}
+
+.spot_total {
+  border: 1px solid #0003;
+  background-color: white;
 }

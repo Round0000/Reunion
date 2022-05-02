@@ -37,6 +37,7 @@ function formatDate(str) {
 //
 
 function displayCalendar(data, mode) {
+
   const list = document.querySelector("#calendarForm_list");
   list.innerHTML = "";
 
@@ -67,6 +68,7 @@ function displayCalendar(data, mode) {
   }
 
   baseDates.forEach((date, index) => {
+    console.log(data.selection)
     const prev = new Date(baseDates[index - 1]).getMonth() + 1;
     const curr = new Date(baseDates[index]).getMonth() + 1;
 
@@ -88,30 +90,50 @@ function displayCalendar(data, mode) {
         <span class="date_month">${getMonthName(date)}</span>
         <span class="date_day">${getDayName(date)}</span>
       </div>
-      <div class="date_options">
-          
-      </div>
     `;
 
-    const optionsBox = newItem.querySelector(".date_options");
+    mode = "display";
+    ui_main.dataset.mode = mode;
 
-    console.log(data.selection[index].date, data.selection[index].options)
-    for (i = 0; i < data.options.length; i++) {
-      const optionAllowed = data.selection[index].options.find(opt => opt.option === i);
+    if (mode === "admin" || mode === "edit") {
+      const optionsBox = document.createElement("DIV");
+      optionsBox.classList.add("date_options");
 
-      const div = document.createElement("div");
-      const input = document.createElement("input");
-      input.type = "checkbox";
-      input.dataset.state = "null";
-      if (!optionAllowed) {
-        input.disabled = true;
+      for (i = 0; i < data.options.length; i++) {
+        const optionAllowed = data.selection[index].options.find(
+          (opt) => opt.option === i
+        );
+
+        const div = document.createElement("div");
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.dataset.state = "null";
+        if (!optionAllowed) {
+          input.disabled = true;
+        }
+        input.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
+        const label = document.createElement("label");
+        label.setAttribute("for", input.id);
+        label.innerText = data.options[i] || "test";
+        div.append(input, label);
+        optionsBox.append(div);
       }
-      input.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
-      const label = document.createElement("label");
-      label.setAttribute("for", input.id);
-      label.innerText = data.options[i] || "test";
-      div.append(input, label);
-      optionsBox.append(div);
+
+      newItem.append(optionsBox);
+    } else {
+      const spots = document.createElement('ul');
+      spots.classList.add('display_spots');
+      data.selection[index].options.forEach((item, optIndex) => {
+        const spot = document.createElement('li');
+        spot.innerHTML = `
+        <div class="spot_title">${data.options[item.option]}</div>
+        <div class="spot_yes"><img src="./img/check.svg" alt="Participations certaines"> ${data.selection[index].options[optIndex].members_yes.length}</div>
+        <div class="spot_maybe"><img src="./img/maybe.svg" alt="Participations possibles"> ${data.selection[index].options[optIndex].members_maybe.length}</div>
+        <div class="spot_total"><img src="./img/total.svg" alt="Total des participations"> ${data.selection[index].options[optIndex].members_yes.length + data.selection[index].options[optIndex].members_maybe.length}</div>
+        `;
+        spots.append(spot);
+      })
+      newItem.append(spots);
     }
 
     list.append(newItem);
