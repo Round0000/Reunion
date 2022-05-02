@@ -654,11 +654,11 @@ section.hidden #calendarForm_actions {
   background-color: white;
   color: #222;
   display: grid;
-  gap: .25em;
-  padding: .25em;
+  /* gap: .25em;
+  padding: .25em; */
   grid-template-columns: repeat(3, 1fr);
   background-color: #fff9;
-  border: 1px solid #0002;
+  border: 1px solid #0003;
 }
 
 .display_spots li+li {
@@ -691,24 +691,20 @@ repeating-linear-gradient(135deg,
   transparent 10px,
   transparent 11px),
   linear-gradient(90deg, hsl(256, 7%, 84%), hsl(256, 7%, 84%));
-  /* box-shadow: 1px 1px 2px #0003;   */
-  border: 1px solid #0002;
+  border-bottom: 1px solid #0002;
   margin-bottom: 0;
 }
 
 .spot_yes {
   background-color: hsla(210, 100%, 90%);
   margin-right: 0;
-  border: 1px solid #0003;  
 }
 
 .spot_maybe {
   background-color: hsla(51, 100%, 90%);
   margin-right: 0;
-  border: 1px solid #0003;
 }
 
 .spot_total {
-  border: 1px solid #0003;
-  background-color: white;
+  background-color: snow;
 }
