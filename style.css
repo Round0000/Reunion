@@ -654,15 +654,13 @@ section.hidden #calendarForm_actions {
   background-color: white;
   color: #222;
   display: grid;
-  /* gap: .25em;
-  padding: .25em; */
   grid-template-columns: repeat(3, 1fr);
   background-color: #fff9;
   border: 1px solid #0003;
 }
 
 .display_spots li+li {
-  margin-top: 1em;
+  margin-top: .5em;
 }
 
 .display_spots li>* {
@@ -693,6 +691,9 @@ repeating-linear-gradient(135deg,
   linear-gradient(90deg, hsl(256, 7%, 84%), hsl(256, 7%, 84%));
   border-bottom: 1px solid #0002;
   margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: .25em;
 }
 
 .spot_yes {
