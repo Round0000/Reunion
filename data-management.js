@@ -1,11 +1,12 @@
 const reunionQuery = window.location.search;
+let reunionID;
 const localDB = [];
 let collection;
 
 if (reunionQuery[1] === "_") {
   ui_main.dataset.mode = "loading";
 
-  const reunionID = reunionQuery.slice(1);
+  reunionID = reunionQuery.slice(1);
 
   collection = db.collection(reunionID);
 
@@ -44,12 +45,17 @@ function storeBaseCal(data) {
     options: data.options,
   });
   db.collection(data.id)
-    .doc("base")
+    .doc("selection")
     .set({ selection: data.selection, members: new Array() });
 }
 
+function storeMemberCal(memberData) {
+  collection.doc("selection").update({
+    members: firebase.firestore.FieldValue.arrayUnion(memberData),
+  });
+}
+
 function firestoreToCalendar(items, id) {
-  console.log(items);
   const obj = { id: id };
 
   items.forEach((doc) => {
@@ -58,13 +64,14 @@ function firestoreToCalendar(items, id) {
       obj.start = doc.start;
       obj.end = doc.end;
       obj.options = doc.options;
-    } else if (doc.id === "base") {
+    } else if (doc.id === "selection") {
       obj.selection = doc.selection;
       obj.members = doc.members;
-      console.log(doc);
     }
   });
 
   console.log(obj);
-  initNewCalendar(obj, "public");
+  initNewCalendar(obj, "edit");
 }
+
+

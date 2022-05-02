@@ -36,7 +36,7 @@ function formatDate(str) {
 
 //
 
-function displayCalendar(data) {
+function displayCalendar(data, mode) {
   const list = document.querySelector("#calendarForm_list");
   list.innerHTML = "";
 
@@ -57,6 +57,8 @@ function displayCalendar(data) {
   if (data.period) {
     baseDates.push(...data.period);
   }
+
+  console.log("data : ", data);
 
   if (data.selection) {
     data.selection.forEach((d) => {
@@ -93,11 +95,17 @@ function displayCalendar(data) {
 
     const optionsBox = newItem.querySelector(".date_options");
 
+    console.log(data.selection[index].date, data.selection[index].options)
     for (i = 0; i < data.options.length; i++) {
+      const optionAllowed = data.selection[index].options.find(opt => opt.option === i);
+
       const div = document.createElement("div");
       const input = document.createElement("input");
       input.type = "checkbox";
       input.dataset.state = "null";
+      if (!optionAllowed) {
+        input.disabled = true;
+      }
       input.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
       const label = document.createElement("label");
       label.setAttribute("for", input.id);
@@ -189,7 +197,7 @@ function initNewCalendar(data, mode) {
     data.end
   )}`;
 
-  displayCalendar(data);
+  displayCalendar(data, mode);
 
   transitionTo(section_calendar);
 }
@@ -205,22 +213,26 @@ function submitNewCalendar(cal, selection, mode) {
     options: cal.options,
   };
 
-  console.log(finalCal);
+  console.log(mode, finalCal);
+
+  if (mode === "admin") {
+    storeBaseCal(finalCal);
+  } else if (mode === "edit") {
+    storeMemberCal({
+      selection: selection,
+      name: username_input.value,
+    });
+  }
 
   transitionTo(section_newCalendarCheckout);
   displayCheckout(finalCal, mode);
-
-  storeBaseCal(finalCal);
 }
 
 //
 calendarForm_actions
   .querySelector('button[type="submit"]')
   .addEventListener("click", (e) => {
-    if (
-      ui_main.dataset.mode === "public" &&
-      username_input.value.length === 0
-    ) {
+    if (ui_main.dataset.mode === "edit" && username_input.value.length === 0) {
       username_input.required = true;
       username_input.focus();
       public_form_details.scrollIntoView();
@@ -229,6 +241,8 @@ calendarForm_actions
 
 ui_calendarForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  const mode = ui_main.dataset.mode;
 
   const dates = e.target.querySelectorAll(".date_item");
   const selection = [];
@@ -241,19 +255,28 @@ ui_calendarForm.addEventListener("submit", (e) => {
       obj.date = item.dataset.date;
 
       item.querySelectorAll("input:checked").forEach((el) => {
-        obj.options.push({
-          option: parseInt(el.id.split("_")[3]),
-          // state: el.dataset.state,
-          members_yes: [],
-          members_maybe: [],
-        });
+        console.log("lol", mode);
+
+        if (mode === "admin") {
+          obj.options.push({
+            option: parseInt(el.id.split("_")[3]),
+            members_yes: [],
+            members_maybe: [],
+          });
+        } else if (mode === "edit") {
+          console.log("here");
+          obj.options.push({
+            option: parseInt(el.id.split("_")[3]),
+            state: el.dataset.state,
+          });
+        }
       });
 
       selection.push(obj);
     }
   });
 
-  submitNewCalendar(currentCalendar, selection);
+  submitNewCalendar(currentCalendar, selection, mode);
 });
 
 // Display checkout
@@ -289,7 +312,7 @@ document.addEventListener("click", (e) => {
       e.target.dataset.state = "checked";
     } else if (
       e.target.dataset.state === "checked" &&
-      ui_main.dataset.mode === "public"
+      ui_main.dataset.mode === "edit"
     ) {
       e.target.checked = true;
       e.target.dataset.state = "maybe";
@@ -332,12 +355,3 @@ const copyToClipboard = (str) => {
 checkout_copy.addEventListener("click", (e) => {
   copyToClipboard(checkout_link.href);
 });
-
-//
-//
-//
-// ui_initialForm.querySelector('button[type="submit"]').click();
-//
-// setTimeout(() => {
-//   calendarForm_actions.querySelector('button[type="submit"]').click();
-// }, 300);

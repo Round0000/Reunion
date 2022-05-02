@@ -517,6 +517,22 @@ form button[type="submit"] {
   background-color: hsla(51, 100%, 60%, 0.3);
 }
 
+.date_options input:disabled {
+  opacity: .1;
+  background-image: url(./img/disabled.svg);
+  border-color: transparent;
+  box-shadow: none;
+  background-color: transparent;
+  background-size: 80%;
+}
+
+.date_options input:disabled + label {
+  pointer-events: none;
+  background-color: hsl(10, 30%, 97%);
+  color: #0003;
+  opacity: .8;
+}
+
 #calendarForm_actions {
   position: sticky;
   z-index: 10;
