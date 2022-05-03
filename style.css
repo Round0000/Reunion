@@ -238,7 +238,7 @@ body[data-mode="edit"] #editMode_toggler {
 }
 
 /* Other */
-#ui_body[data-mode="loading"] {
+body[data-mode="loading"] #ui_main {
   visibility: hidden;
 }
 
