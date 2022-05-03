@@ -185,21 +185,21 @@ function displayCalendar(data, mode) {
         });
         spot.innerHTML = `
         <div class="spot_title">${data.options[item.option]}</div>
-        <div class="spot_no"><img src="./img/no.svg" alt="Participations certaines"> ${
+        <div class="spot_no" title="Non disponibles"><img src="./img/no.svg" alt="Non disponibles"> ${
           members_no.length
         }
         <ul class="spot_tooltip"></ul></div>
-        <div class="spot_maybe"><img src="./img/maybe.svg" alt="Participations possibles"> ${
+        <div class="spot_maybe" title="Participations éventuelles"><img src="./img/maybe.svg" alt="Participations éventuelles"> ${
           members_maybe.length
         }
         <ul class="spot_tooltip"></ul>
         </div>
-        <div class="spot_yes"><img src="./img/check.svg" alt="Participations certaines"> ${
+        <div class="spot_yes" title="Participations assurées"><img src="./img/check.svg" alt="Participations assurées"> ${
           members_yes.length
         }
         <ul class="spot_tooltip"></ul>
         </div>
-        <div class="spot_total"><img src="./img/total.svg" alt="Total des participations"> ${
+        <div class="spot_total" title="Total des participations possibles"><img src="./img/total.svg" alt="Total des participations possibles"> ${
           members_total.length
         }
         <ul class="spot_tooltip"></ul>
