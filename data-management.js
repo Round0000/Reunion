@@ -4,7 +4,7 @@ const localDB = [];
 let collection;
 
 if (reunionQuery[1] === "_") {
-  ui_main.dataset.mode = "loading";
+  document.body.dataset.mode = "loading";
 
   reunionID = reunionQuery.slice(1);
 
@@ -24,7 +24,7 @@ if (reunionQuery[1] === "_") {
         if (localDB.length > 0) {
           firestoreToCalendar(localDB, id);
         } else {
-          ui_main.dataset.mode = "admin";
+          document.body.dataset.mode = "admin";
         }
       })
       .catch((error) => {

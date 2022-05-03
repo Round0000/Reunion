@@ -199,13 +199,13 @@ button:active {
   pointer-events: none;
   display: flex;
   flex-direction: column;
-  padding: 2em;
-  padding-top: 5vh;
+  padding: calc(1em + 4vw);
   align-items: flex-end;
+  max-height: 70vh;
 }
 
 #menu.menu-visible {
-  height: calc(100vh - 4em);
+  height: 100vh;
   opacity: 1;
   pointer-events: all;
 }
@@ -230,12 +230,15 @@ button:active {
   text-decoration: underline;
 }
 
-#displayMode_toggler {
-  /* align-self: center; */
+body[data-mode="display"] #displayMode_toggler {
+  display: none !important;
+}
+body[data-mode="edit"] #editMode_toggler {
+  display: none !important;
 }
 
 /* Other */
-#ui_main[data-mode="loading"] {
+#ui_body[data-mode="loading"] {
   visibility: hidden;
 }
 
@@ -286,6 +289,11 @@ section h2 {
   font-size: 1.25rem;
   margin-bottom: 0.25em;
   color: #333;
+}
+
+#section_calendar h3 {
+  line-height: 1;
+  margin-bottom: .25em;
 }
 
 #section_createNewCalendar span {
@@ -652,7 +660,7 @@ section.hidden #calendarForm_actions {
   max-width: 100%;
 }
 
-#ui_main[data-mode="edit"] #username_label {
+#ui_body[data-mode="edit"] #username_label {
   display: flex;
 }
 

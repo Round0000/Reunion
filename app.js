@@ -37,7 +37,7 @@ function formatDate(str) {
 //
 
 function displayCalendar(data, mode) {
-  ui_main.dataset.mode = mode;
+  ui_body.dataset.mode = mode;
 
   const list = document.querySelector("#calendarForm_list");
   list.innerHTML = "";
@@ -180,6 +180,8 @@ function displayCalendar(data, mode) {
 }
 
 // UI elements
+const ui_body = document.body;
+
 const ui_sectionCreateNewCalendar = document.getElementById(
   "section_createNewCalendar"
 );
@@ -240,7 +242,7 @@ function initNewCalendar(data, mode) {
 
   currentCalendar = data;
 
-  ui_main.dataset.mode = mode;
+  ui_body.dataset.mode = mode;
 
   if (mode === "admin") {
     const now = new Date();
@@ -293,7 +295,7 @@ function submitNewCalendar(cal, selection, mode) {
 calendarForm_actions
   .querySelector('button[type="submit"]')
   .addEventListener("click", (e) => {
-    if (ui_main.dataset.mode === "edit" && username_input.value.length === 0) {
+    if (ui_body.dataset.mode === "edit" && username_input.value.length === 0) {
       username_input.required = true;
       username_input.focus();
       public_form_details.scrollIntoView();
@@ -303,7 +305,7 @@ calendarForm_actions
 ui_calendarForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const mode = ui_main.dataset.mode;
+  const mode = ui_body.dataset.mode;
 
   const dates = e.target.querySelectorAll(".date_item");
   const selection = [];
@@ -372,7 +374,7 @@ document.addEventListener("click", (e) => {
       e.target.dataset.state = "checked";
     } else if (
       e.target.dataset.state === "checked" &&
-      ui_main.dataset.mode === "edit"
+      ui_body.dataset.mode === "edit"
     ) {
       e.target.checked = true;
       e.target.dataset.state = "maybe";
@@ -385,7 +387,7 @@ document.addEventListener("click", (e) => {
 
 // Menu
 menu.style.maxHeight =
-  window.innerHeight +
+  window.innerHeight -
   parseInt(window.getComputedStyle(header).height.split("px")[0]) +
   "px";
 
