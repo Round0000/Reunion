@@ -685,7 +685,7 @@ body[data-mode="edit"] #username_label {
   background-color: white;
   color: #222;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   background-color: #fff9;
   border: 1px solid #0003;
 }
@@ -726,6 +726,11 @@ repeating-linear-gradient(135deg,
   display: flex;
   justify-content: center;
   padding: .25em;
+}
+
+.spot_no {
+  background-color: rgb(255, 215, 204);
+  margin-right: 0;
 }
 
 .spot_yes {

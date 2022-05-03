@@ -79,7 +79,6 @@ function convertDateForIos(date) {
 //
 
 function displayCalendar(data, mode) {
-  console.log(data);
   ui_body.dataset.mode = mode;
 
   const list = document.querySelector("#calendarForm_list");
@@ -178,15 +177,25 @@ function displayCalendar(data, mode) {
         const members_maybe =
           data.selection[index].options[optIndex].members_maybe;
         const members_total = [...members_yes, ...members_maybe];
+        const members_no = [];
+        data.members.forEach((member) => {
+          if (!members_total.find((el) => el === member.name)) {
+            members_no.push(member.name);
+          }
+        });
         spot.innerHTML = `
         <div class="spot_title">${data.options[item.option]}</div>
-        <div class="spot_yes"><img src="./img/check.svg" alt="Participations certaines"> ${
-          members_yes.length
+        <div class="spot_no"><img src="./img/no.svg" alt="Participations certaines"> ${
+          members_no.length
+        }
+        <ul class="spot_tooltip"></ul></div>
+        <div class="spot_maybe"><img src="./img/maybe.svg" alt="Participations possibles"> ${
+          members_maybe.length
         }
         <ul class="spot_tooltip"></ul>
         </div>
-        <div class="spot_maybe"><img src="./img/maybe.svg" alt="Participations possibles"> ${
-          members_maybe.length
+        <div class="spot_yes"><img src="./img/check.svg" alt="Participations certaines"> ${
+          members_yes.length
         }
         <ul class="spot_tooltip"></ul>
         </div>
@@ -196,18 +205,24 @@ function displayCalendar(data, mode) {
         <ul class="spot_tooltip"></ul>
         </div>
         `;
-        const spotYesTip = spot.querySelector(".spot_yes .spot_tooltip");
+        const spotNoTip = spot.querySelector(".spot_no .spot_tooltip");
         const spotMaybeTip = spot.querySelector(".spot_maybe .spot_tooltip");
+        const spotYesTip = spot.querySelector(".spot_yes .spot_tooltip");
         const spotTotalTip = spot.querySelector(".spot_total .spot_tooltip");
-        members_yes.forEach((member) => {
+        members_no.forEach((member) => {
           const memberItem = document.createElement("li");
           memberItem.innerText = member;
-          spotYesTip.append(memberItem);
+          spotNoTip.append(memberItem);
         });
         members_maybe.forEach((member) => {
           const memberItem = document.createElement("li");
           memberItem.innerText = member;
           spotMaybeTip.append(memberItem);
+        });
+        members_yes.forEach((member) => {
+          const memberItem = document.createElement("li");
+          memberItem.innerText = member;
+          spotYesTip.append(memberItem);
         });
         members_total.forEach((member) => {
           const memberItem = document.createElement("li");
@@ -340,7 +355,7 @@ function submitNewCalendar(cal, selection, mode) {
     options: cal.options,
   };
 
-  console.log(mode, finalCal);
+  console.log(finalCal);
 
   if (mode === "admin") {
     storeBaseCal(finalCal);
@@ -409,7 +424,6 @@ ui_calendarForm.addEventListener("submit", (e) => {
 
 // Display checkout
 function displayCheckout(data, mode) {
-  console.log(data)
   checkout_title.innerText = data.title;
   checkout_period.innerText = `Du ${formatDate(data.start)} au ${formatDate(
     data.end
