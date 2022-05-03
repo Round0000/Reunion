@@ -401,7 +401,13 @@ function displayCheckout(data, mode) {
 
   if (mode === "edit") {
     checkout_instructions.innerText = "Merci pour votre participation !";
+    checkout_copy.classList.add("hidden");
+  } else {
+    checkout_copy.classList.remove("hidden");
   }
+
+  header_icon.classList.remove("hidden");
+  ui_menuToggler.classList.add("hidden");
 }
 
 // Check/Uncheck All options
@@ -457,7 +463,7 @@ menu.addEventListener("click", (e) => {
     initDisplayMode(currentCalendar);
   }
   if (e.target.matches("#editMode_toggler")) {
-    displayCalendar(currentCalendar, "edit");
+    window.location.reload();
   }
 });
 
