@@ -1,5 +1,33 @@
 let currentCalendar = {};
 
+// Initial period input values
+let startDate = new Date();
+function getInputDateFormat(date) {
+  console.log(date);
+  return `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+}
+function setMaxEndDate(startDate) {
+  let maxDate = new Date(startDate);
+  if (maxDate.getDate() > 28) {
+    maxDate.setDate(28);
+  }
+
+  new_end.setAttribute(
+    "max",
+    getInputDateFormat(new Date(maxDate.setMonth(maxDate.getMonth() + 5)))
+  );
+}
+setMaxEndDate(startDate);
+new_start.value = getInputDateFormat(startDate);
+new_start.addEventListener("change", (e) => {
+  startDate = new Date(new_start.value);
+  setMaxEndDate(startDate);
+});
+
+//
+
 function getDaysArray(start, end) {
   const arr = [];
   for (
@@ -50,7 +78,7 @@ function displayCalendar(data, mode) {
     newMonthTitle.classList.add("month_title");
     newMonthTitle.id = newMonthTitle.innerText.replace(" ", "_");
     list.append(newMonthTitle);
-    
+
     const newNavMonth = document.createElement("li");
     newNavMonth.innerHTML = `<a href="#${newMonthTitle.id}">${newMonthTitle.innerText}</a>`;
     ui_menuList.append(newNavMonth);
@@ -238,6 +266,15 @@ function transitionTo(el) {
   el.classList.remove("hidden");
 }
 
+function generateRandomLetter() {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return (
+    alphabet[Math.floor(Math.random() * alphabet.length)] +
+    alphabet[Math.floor(Math.random() * alphabet.length)] +
+    alphabet[Math.floor(Math.random() * alphabet.length)]
+  );
+}
+
 function initNewCalendar(data, mode) {
   header_icon.classList.add("hidden");
   ui_menuToggler.classList.remove("hidden");
@@ -248,12 +285,10 @@ function initNewCalendar(data, mode) {
 
   if (mode === "admin") {
     const now = new Date();
-    data.id = `_${data.title
-      .replaceAll(" ", "")
-      .slice(0, 3)
-      .toUpperCase()}${now.getFullYear()}${
+
+    data.id = `_REU${now.getFullYear()}${
       now.getMonth() + 1
-    }${now.getDate()}${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
+    }${now.getDate()}${generateRandomLetter()}`;
     data.period = getCalendarData(data.start, data.end);
   }
 
@@ -408,7 +443,7 @@ menu.addEventListener("click", (e) => {
     initDisplayMode(currentCalendar);
   }
   if (e.target.matches("#editMode_toggler")) {
-    displayCalendar(currentCalendar, "edit")
+    displayCalendar(currentCalendar, "edit");
   }
 });
 
