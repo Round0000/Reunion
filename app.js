@@ -42,13 +42,15 @@ function displayCalendar(data, mode) {
   const list = document.querySelector("#calendarForm_list");
   list.innerHTML = "";
 
+  ui_menuList.innerHTML = "";
+
   function addMonthTitle(date) {
     const newMonthTitle = document.createElement("h4");
     newMonthTitle.innerText = getMonthName(date) + " " + date.getFullYear();
     newMonthTitle.classList.add("month_title");
     newMonthTitle.id = newMonthTitle.innerText.replace(" ", "_");
     list.append(newMonthTitle);
-
+    
     const newNavMonth = document.createElement("li");
     newNavMonth.innerHTML = `<a href="#${newMonthTitle.id}">${newMonthTitle.innerText}</a>`;
     ui_menuList.append(newNavMonth);
@@ -340,13 +342,17 @@ ui_calendarForm.addEventListener("submit", (e) => {
 });
 
 // Display checkout
-function displayCheckout(data) {
+function displayCheckout(data, mode) {
   checkout_title.innerText = data.title;
   checkout_period.innerText = `Du ${formatDate(data.start)} au ${formatDate(
     data.end
   )}`;
   checkout_link.innerText = "Voir le calendrier";
   checkout_link.href = `${window.location.origin}?${data.id}`;
+
+  if (mode === "edit") {
+    checkout_instructions.innerText = "Merci pour votre participation !";
+  }
 }
 
 // Check/Uncheck All options
@@ -395,11 +401,14 @@ ui_menuToggler.addEventListener("click", (e) => {
   menu.classList.toggle("menu-visible");
 });
 menu.addEventListener("click", (e) => {
-  if (e.target.matches("a") || e.target.matches("#displayMode_toggler")) {
+  if (e.target.matches("a") || e.target.matches("#menu button")) {
     menu.classList.remove("menu-visible");
   }
   if (e.target.matches("#displayMode_toggler")) {
     initDisplayMode(currentCalendar);
+  }
+  if (e.target.matches("#editMode_toggler")) {
+    displayCalendar(currentCalendar, "edit")
   }
 });
 
