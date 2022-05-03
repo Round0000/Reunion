@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>Reunion</title>
   </head>
   <body data-mode="admin">
@@ -63,21 +67,11 @@
               <div class="form_box">
                 <div class="form_item">
                   <label for="new_start">Date de début</label>
-                  <input
-                    type="date"
-                    name="start"
-                    id="new_start"
-                    required
-                  />
+                  <input type="date" name="start" id="new_start" required />
                 </div>
                 <div class="form_item">
                   <label for="new_end">Date de fin</label>
-                  <input
-                    type="date"
-                    name="end"
-                    id="new_end"
-                    required
-                  />
+                  <input type="date" name="end" id="new_end" required />
                 </div>
               </div>
             </div>
@@ -121,14 +115,25 @@
               <h3 id="public_form_title">Répètes Eusebes</h3>
               <p id="public_form_period">Du 22.03.2022 au 19.04.2022</p>
               <label id="username_label">
-                <input type="text" placeholder="Votre nom" id="username_input" name="username" maxlength="20" />
+                <input
+                  type="text"
+                  placeholder="Votre nom"
+                  id="username_input"
+                  name="username"
+                  maxlength="20"
+                />
               </label>
             </div>
 
             <div id="display_settings">
               <label>
                 <span>Filtrer par meilleures disponibilités</span>
-                <input type="range" id="display_filter_total" step="1" value="0">
+                <input
+                  type="range"
+                  id="display_filter_total"
+                  step="1"
+                  value="0"
+                />
               </label>
             </div>
 
