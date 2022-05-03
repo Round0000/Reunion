@@ -52,20 +52,34 @@ function getCalendarData(start, end) {
 }
 
 function getDayName(date = new Date(), locale = "fr-FR") {
-  return date.toLocaleDateString(locale, { weekday: "long" });
+  return date.toLocaleDateString(locale, { weekday: "long" }) || "wesh";
 }
 function getMonthName(date = new Date(), locale = "fr-FR") {
   return date.toLocaleDateString(locale, { month: "long" });
 }
 function formatDate(str) {
   const date = new Date(str);
-  const formattedDate = date.toLocaleString().split(",")[0];
+  // const formattedDate = date.toLocaleString().split(",")[0];
+
+  const formattedDate = `${date.getDate().toString().padStart(2, "0")}/${(
+    date.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}/${date.getFullYear()}`;
   return formattedDate;
 }
 
 //
+function convertDateForIos(date) {
+  date = date += " 00:00:00";
+  var arr = date.split(/[- :]/);
+  date = new Date(arr[0], arr[1] - 1, arr[2], arr[3], arr[4], arr[5]);
+  return date;
+}
+//
 
 function displayCalendar(data, mode) {
+  console.log(data);
   ui_body.dataset.mode = mode;
 
   const list = document.querySelector("#calendarForm_list");
@@ -93,7 +107,7 @@ function displayCalendar(data, mode) {
 
   if (data.selection) {
     data.selection.forEach((d) => {
-      baseDates.push(d.date);
+      baseDates.push(convertDateForIos(d.date));
     });
   }
 
@@ -333,7 +347,7 @@ function submitNewCalendar(cal, selection, mode) {
   } else if (mode === "edit") {
     storeMemberCal({
       selection: selection,
-      name: username_input.value,
+      name: username_input.value.trim(),
     });
   }
 
@@ -386,11 +400,16 @@ ui_calendarForm.addEventListener("submit", (e) => {
     }
   });
 
-  submitNewCalendar(currentCalendar, selection, mode);
+  if (selection.length === 0) {
+    alert("Vous n'avez coché aucun créneau.");
+  } else {
+    submitNewCalendar(currentCalendar, selection, mode);
+  }
 });
 
 // Display checkout
 function displayCheckout(data, mode) {
+  console.log(data)
   checkout_title.innerText = data.title;
   checkout_period.innerText = `Du ${formatDate(data.start)} au ${formatDate(
     data.end
@@ -399,7 +418,8 @@ function displayCheckout(data, mode) {
   checkout_link.href = `${window.location.origin}?${data.id}`;
 
   if (mode === "edit") {
-    checkout_instructions.innerText = "Merci pour votre participation !";
+    checkout_instructions.innerText = `Merci ${username_input.value.trim()} pour votre participation !
+    Pour revenir à l'édition du calendrier et voir les résultats, suivez le lien ci-dessous.`;
     checkout_copy.classList.add("hidden");
   } else {
     checkout_copy.classList.remove("hidden");
@@ -491,7 +511,6 @@ function setMaxTotal(data) {
 }
 
 display_filter_total.addEventListener("change", (e) => {
-
   document.querySelectorAll(".spot_total").forEach((item) => {
     if (parseInt(item.innerText) >= e.target.value) {
       item.parentElement.classList.remove("hidden");
@@ -508,3 +527,8 @@ display_filter_total.addEventListener("change", (e) => {
     }
   });
 });
+
+//
+//
+//
+// header.append(getMonthName(new Date()));
