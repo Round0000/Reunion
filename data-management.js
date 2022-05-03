@@ -15,7 +15,6 @@ if (reunionQuery[1] === "_") {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
           const item = doc.data();
           item.id = doc.id;
           localDB.push(item);
@@ -100,5 +99,5 @@ function updateTotal(data) {
 }
 
 function initDisplayMode(data) {
-    displayCalendar(updateTotal(data), "display");
+  displayCalendar(updateTotal(data), "display");
 }

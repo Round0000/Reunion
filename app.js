@@ -1,5 +1,7 @@
 let currentCalendar = {};
 
+linkHome.href = window.location.origin;
+
 // Initial period input values
 let startDate = new Date();
 function getInputDateFormat(date) {
@@ -154,7 +156,7 @@ function displayCalendar(data, mode) {
       }
 
       newItem.append(optionsBox);
-    } else {
+    } else if (mode === "display") {
       const spots = document.createElement("ul");
       spots.classList.add("display_spots");
       data.selection[index].options.forEach((item, optIndex) => {
@@ -207,6 +209,15 @@ function displayCalendar(data, mode) {
 
     list.append(newItem);
   });
+
+  if (mode === "display") {
+    const allTotals = [];
+    calendarForm_list.querySelectorAll(".spot_total").forEach((item) => {
+      allTotals.push(parseInt(item.innerText));
+    });
+
+    setMaxTotal(allTotals);
+  }
 }
 
 // UI elements
@@ -286,9 +297,12 @@ function initNewCalendar(data, mode) {
   if (mode === "admin") {
     const now = new Date();
 
-    data.id = `_REU${now.getFullYear()}${
-      now.getMonth() + 1
-    }${now.getDate()}${generateRandomLetter()}`;
+    data.id = `_REU${now.getFullYear()}${(now.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}${now
+      .getDate()
+      .toString()
+      .padStart(2, "0")}${generateRandomLetter()}`;
     data.period = getCalendarData(data.start, data.end);
   }
 
@@ -463,4 +477,30 @@ const copyToClipboard = (str) => {
 
 checkout_copy.addEventListener("click", (e) => {
   copyToClipboard(checkout_link.href);
+});
+
+// Display mode
+
+function setMaxTotal(data) {
+  display_filter_total.setAttribute("max", Math.max(...data));
+}
+
+display_filter_total.addEventListener("change", (e) => {
+  console.log(e.target.value);
+
+  document.querySelectorAll(".spot_total").forEach((item) => {
+    if (parseInt(item.innerText) >= e.target.value) {
+      item.parentElement.classList.remove("hidden");
+    } else {
+      item.parentElement.classList.add("hidden");
+    }
+  });
+
+  document.querySelectorAll(".date_item").forEach((item) => {
+    if (item.querySelector(".display_spots > li:not(.hidden)")) {
+      item.classList.remove("hidden");
+    } else {
+      item.classList.add("hidden");
+    }
+  });
 });

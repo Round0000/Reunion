@@ -155,6 +155,11 @@ button:active {
   color: orange;
 }
 
+#header h1 a {
+  color: white;
+  text-decoration: none;
+}
+
 #header_icon {
   background-image: url(./img/calendar-icon.svg);
   background-repeat: no-repeat;
@@ -189,7 +194,7 @@ button:active {
 #menu {
   position: absolute;
   background-color: hsla(235, 25%, 12%, .9);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
   left: 0;
   right: 0;
   top: 100%;
@@ -233,6 +238,14 @@ body[data-mode="display"] #displayMode_toggler {
 }
 body[data-mode="edit"] #editMode_toggler {
   display: none !important;
+}
+
+body[data-mode="display"] #calendarForm_list:hover > li:not(:hover) {
+  opacity: .4;
+}
+
+body[data-mode="display"] #calendarForm_actions {
+  display: none;
 }
 
 /* Other */
@@ -307,6 +320,10 @@ section h2 {
 form input {
   padding: 0.25em;
   flex: 1;
+}
+
+.new_period input {
+  max-width: 9em;
 }
 
 .form_item {
@@ -728,10 +745,10 @@ repeating-linear-gradient(135deg,
 .spot_tooltip {
   position: absolute;
   z-index: 20;
-  inset: 0;
-  min-height: 100%;
+  top: 0;
+  left: 0;
+  min-width: 100%;
   height: max-content;
-  min-width: max-content;
   background-color: inherit;
   border: 1px solid #0003;
   border-top: 1px dashed #0005;
@@ -741,12 +758,8 @@ repeating-linear-gradient(135deg,
   pointer-events: none;
   transition: all .2s;
   box-shadow: 2px 2px 3px #0003;
-  list-style-type: circle;
-}
-
-.spot_tooltip li {
-  border-left: 3px solid #0002;
-  padding-left: .25em;
+  border-left: 4px solid #0008;
+  padding-left: calc(.75em - 4px);
 }
 
 .spot_tooltip:empty {
@@ -761,4 +774,26 @@ repeating-linear-gradient(135deg,
   pointer-events: all;
   opacity: 1;
   top: 100%;
+}
+
+
+
+#display_settings {
+  display: none;
+  margin: auto;
+  margin-bottom: 2em;
+  padding: .5em 1.5em;
+  max-width: max-content;
+  box-shadow: inset 1px 1px 2px #0003;
+  background-color: #ccc1;
+}
+
+#display_settings label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body[data-mode="display"] #display_settings {
+  display: block;
 }

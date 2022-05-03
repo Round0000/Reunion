@@ -10,7 +10,7 @@
   <body data-mode="admin">
     <header id="header">
       <div class="container">
-        <h1>Reunion</h1>
+        <h1><a id="linkHome" href="">Reunion</a></h1>
         <div id="header_icon"></div>
         <button id="menu_toggler" class="hidden">
           <svg
@@ -124,6 +124,14 @@
                 <input type="text" placeholder="Votre nom" id="username_input" name="username" maxlength="20" />
               </label>
             </div>
+
+            <div id="display_settings">
+              <label>
+                <span>Filtrer par meilleures disponibilités</span>
+                <input type="range" id="display_filter_total" step="1" value="0">
+              </label>
+            </div>
+
             <ul id="calendarForm_list"></ul>
           </form>
         </div>
