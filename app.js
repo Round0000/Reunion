@@ -5,7 +5,6 @@ linkHome.href = window.location.origin;
 // Initial period input values
 let startDate = new Date();
 function getInputDateFormat(date) {
-  console.log(date);
   return `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
@@ -492,7 +491,6 @@ function setMaxTotal(data) {
 }
 
 display_filter_total.addEventListener("change", (e) => {
-  console.log(e.target.value);
 
   document.querySelectorAll(".spot_total").forEach((item) => {
     if (parseInt(item.innerText) >= e.target.value) {
