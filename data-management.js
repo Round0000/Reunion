@@ -70,8 +70,35 @@ function firestoreToCalendar(items, id) {
     }
   });
 
-  console.log(obj);
   initNewCalendar(obj, "edit");
 }
 
+function updateTotal(data) {
+  data.members.forEach((member) => {
+    const name = member.name;
+    member.selection.forEach((item) => {
+      item.options.forEach((option) => {
+        const dateItem = data.selection.find((el) => el.date === item.date);
+        const foundOption = dateItem.options.find(
+          (el) => el.option === option.option
+        );
 
+        if (!foundOption) {
+          return;
+        }
+
+        if (option.state === "checked") {
+          foundOption.members_yes.push(name);
+        } else if (option.state === "maybe") {
+          foundOption.members_maybe.push(name);
+        }
+      });
+    });
+  });
+
+  return data;
+}
+
+function initDisplayMode(data) {
+    displayCalendar(updateTotal(data), "display");
+}

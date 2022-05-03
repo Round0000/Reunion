@@ -37,6 +37,7 @@ function formatDate(str) {
 //
 
 function displayCalendar(data, mode) {
+  ui_main.dataset.mode = mode;
 
   const list = document.querySelector("#calendarForm_list");
   list.innerHTML = "";
@@ -59,8 +60,6 @@ function displayCalendar(data, mode) {
     baseDates.push(...data.period);
   }
 
-  console.log("data : ", data);
-
   if (data.selection) {
     data.selection.forEach((d) => {
       baseDates.push(d.date);
@@ -68,7 +67,6 @@ function displayCalendar(data, mode) {
   }
 
   baseDates.forEach((date, index) => {
-    console.log(data.selection)
     const prev = new Date(baseDates[index - 1]).getMonth() + 1;
     const curr = new Date(baseDates[index]).getMonth() + 1;
 
@@ -92,25 +90,31 @@ function displayCalendar(data, mode) {
       </div>
     `;
 
-    mode = "display";
-    ui_main.dataset.mode = mode;
-
     if (mode === "admin" || mode === "edit") {
       const optionsBox = document.createElement("DIV");
       optionsBox.classList.add("date_options");
 
       for (i = 0; i < data.options.length; i++) {
-        const optionAllowed = data.selection[index].options.find(
-          (opt) => opt.option === i
-        );
+        if (mode === "edit") {
+          const optionAllowed = data.selection[index].options.find(
+            (opt) => opt.option === i
+          );
+        }
 
         const div = document.createElement("div");
         const input = document.createElement("input");
         input.type = "checkbox";
         input.dataset.state = "null";
-        if (!optionAllowed) {
-          input.disabled = true;
+
+        if (mode === "edit") {
+          const optionAllowed = data.selection[index].options.find(
+            (opt) => opt.option === i
+          );
+          if (!optionAllowed) {
+            input.disabled = true;
+          }
         }
+
         input.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
         const label = document.createElement("label");
         label.setAttribute("for", input.id);
@@ -121,18 +125,53 @@ function displayCalendar(data, mode) {
 
       newItem.append(optionsBox);
     } else {
-      const spots = document.createElement('ul');
-      spots.classList.add('display_spots');
+      const spots = document.createElement("ul");
+      spots.classList.add("display_spots");
       data.selection[index].options.forEach((item, optIndex) => {
-        const spot = document.createElement('li');
+        const spot = document.createElement("li");
+        const members_yes = data.selection[index].options[optIndex].members_yes;
+        const members_maybe =
+          data.selection[index].options[optIndex].members_maybe;
+        const members_total = [...members_yes, ...members_maybe];
         spot.innerHTML = `
         <div class="spot_title">${data.options[item.option]}</div>
-        <div class="spot_yes"><img src="./img/check.svg" alt="Participations certaines"> ${data.selection[index].options[optIndex].members_yes.length}</div>
-        <div class="spot_maybe"><img src="./img/maybe.svg" alt="Participations possibles"> ${data.selection[index].options[optIndex].members_maybe.length}</div>
-        <div class="spot_total"><img src="./img/total.svg" alt="Total des participations"> ${data.selection[index].options[optIndex].members_yes.length + data.selection[index].options[optIndex].members_maybe.length}</div>
+        <div class="spot_yes"><img src="./img/check.svg" alt="Participations certaines"> ${
+          members_yes.length
+        }
+        <ul class="spot_tooltip"></ul>
+        </div>
+        <div class="spot_maybe"><img src="./img/maybe.svg" alt="Participations possibles"> ${
+          members_maybe.length
+        }
+        <ul class="spot_tooltip"></ul>
+        </div>
+        <div class="spot_total"><img src="./img/total.svg" alt="Total des participations"> ${
+          members_total.length
+        }
+        <ul class="spot_tooltip"></ul>
+        </div>
         `;
+        const spotYesTip = spot.querySelector(".spot_yes .spot_tooltip");
+        const spotMaybeTip = spot.querySelector(".spot_maybe .spot_tooltip");
+        const spotTotalTip = spot.querySelector(".spot_total .spot_tooltip");
+        members_yes.forEach((member) => {
+          const memberItem = document.createElement("li");
+          memberItem.innerText = member;
+          spotYesTip.append(memberItem);
+        });
+        members_maybe.forEach((member) => {
+          const memberItem = document.createElement("li");
+          memberItem.innerText = member;
+          spotMaybeTip.append(memberItem);
+        });
+        members_total.forEach((member) => {
+          const memberItem = document.createElement("li");
+          memberItem.innerText = member;
+          spotTotalTip.append(memberItem);
+        });
+
         spots.append(spot);
-      })
+      });
       newItem.append(spots);
     }
 
@@ -277,8 +316,6 @@ ui_calendarForm.addEventListener("submit", (e) => {
       obj.date = item.dataset.date;
 
       item.querySelectorAll("input:checked").forEach((el) => {
-        console.log("lol", mode);
-
         if (mode === "admin") {
           obj.options.push({
             option: parseInt(el.id.split("_")[3]),
@@ -286,7 +323,6 @@ ui_calendarForm.addEventListener("submit", (e) => {
             members_maybe: [],
           });
         } else if (mode === "edit") {
-          console.log("here");
           obj.options.push({
             option: parseInt(el.id.split("_")[3]),
             state: el.dataset.state,
@@ -315,11 +351,13 @@ function displayCheckout(data) {
 document.addEventListener("click", (e) => {
   if (e.target.matches("#action_checkAll")) {
     document.querySelectorAll(".date_item input").forEach((inp) => {
+      if (inp.disabled) return;
       inp.checked = true;
       inp.dataset.state = "checked";
     });
   } else if (e.target.matches("#action_uncheckAll")) {
     document.querySelectorAll(".date_item input").forEach((inp) => {
+      if (inp.disabled) return;
       inp.checked = false;
       inp.dataset.state = "null";
     });
@@ -355,8 +393,11 @@ ui_menuToggler.addEventListener("click", (e) => {
   menu.classList.toggle("menu-visible");
 });
 menu.addEventListener("click", (e) => {
-  if (e.target.matches("a")) {
+  if (e.target.matches("a") || e.target.matches("#displayMode_toggler")) {
     menu.classList.remove("menu-visible");
+  }
+  if (e.target.matches("#displayMode_toggler")) {
+    initDisplayMode(currentCalendar);
   }
 });
 
