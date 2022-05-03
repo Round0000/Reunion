@@ -344,7 +344,7 @@ function displayCheckout(data) {
     data.end
   )}`;
   checkout_link.innerText = "Voir le calendrier";
-  checkout_link.href = "http://127.0.0.1:5500/?" + data.id;
+  checkout_link.href = `${window.location.origin}?${data.id}`;
 }
 
 // Check/Uncheck All options
