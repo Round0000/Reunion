@@ -1,12 +1,3 @@
-window.addEventListener("beforeunload", function (e) {
-  if (ui_body.dataset.mode === "admin" || ui_body.dataset.mode === "edit") {
-    const confirmationMessage = "Vos modifications risquent de ne pas être enregistrées.";
-
-    e.returnValue = confirmationMessage;
-    return confirmationMessage;
-  }
-});
-
 let currentCalendar = {};
 
 linkHome.href = window.location.origin;
@@ -92,6 +83,11 @@ function displayCalendar(data, mode) {
 
   if (mode === "edit" && localDB[1].members.length === 0) {
     displayMode_toggler.classList.add('hidden');
+  }
+
+  if (mode === "admin") {
+    displayMode_toggler.classList.add('hidden');
+    editMode_toggler.classList.add('hidden');
   }
 
   const list = document.querySelector("#calendarForm_list");
