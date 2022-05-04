@@ -81,6 +81,10 @@ function convertDateForIos(date) {
 function displayCalendar(data, mode) {
   ui_body.dataset.mode = mode;
 
+  if (mode === "edit" && localDB[1].members.length === 0) {
+    displayMode_toggler.classList.add('hidden');
+  }
+
   const list = document.querySelector("#calendarForm_list");
   list.innerHTML = "";
 
@@ -139,12 +143,6 @@ function displayCalendar(data, mode) {
       optionsBox.classList.add("date_options");
 
       for (i = 0; i < data.options.length; i++) {
-        if (mode === "edit") {
-          const optionAllowed = data.selection[index].options.find(
-            (opt) => opt.option === i
-          );
-        }
-
         const div = document.createElement("div");
         const input = document.createElement("input");
         input.type = "checkbox";
@@ -492,13 +490,14 @@ menu.addEventListener("click", (e) => {
   if (e.target.matches("a") || e.target.matches("#menu button")) {
     menu.classList.remove("menu-visible");
   }
-  if (e.target.matches("#displayMode_toggler")) {
-    initDisplayMode(currentCalendar);
-  }
-  if (e.target.matches("#editMode_toggler")) {
-    window.location.reload();
-  }
 });
+
+displayMode_toggler.addEventListener('click', e => {
+  initDisplayMode(currentCalendar);
+})
+editMode_toggler.addEventListener('click', e => {
+  window.location.reload();
+})
 
 //
 

@@ -240,6 +240,15 @@ body[data-mode="edit"] #editMode_toggler {
   display: none !important;
 }
 
+.mode_toggler {
+  font-size: 1rem;
+  padding: .5em .75em;
+  height: auto;
+  justify-self: center;
+  width: max-content;
+  margin: 1em auto .5em;
+}
+
 body[data-mode="display"] #calendarForm_list:hover > li:not(:hover) {
   opacity: .4;
 }
