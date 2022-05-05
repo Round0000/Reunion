@@ -116,13 +116,24 @@
                 <input
                   type="text"
                   placeholder="Votre nom"
+                  autocomplete="off"
+                  list="membernames"
                   id="username_input"
                   name="username"
                   maxlength="20"
                 />
+                <datalist id="membernames"> </datalist>
               </label>
-              <button type="button" class="mode_toggler" id="editMode_toggler">Passer en mode édition</button>
-              <button type="button" class="mode_toggler" id="displayMode_toggler">Voir les résultats</button>
+              <button type="button" class="mode_toggler" id="editMode_toggler">
+                Passer en mode édition
+              </button>
+              <button
+                type="button"
+                class="mode_toggler"
+                id="displayMode_toggler"
+              >
+                Voir les résultats
+              </button>
             </div>
 
             <div id="display_settings">

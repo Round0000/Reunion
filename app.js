@@ -81,13 +81,21 @@ function convertDateForIos(date) {
 function displayCalendar(data, mode) {
   ui_body.dataset.mode = mode;
 
-  if (mode === "edit" && localDB[1].members.length === 0) {
-    displayMode_toggler.classList.add('hidden');
+  if (mode === "edit") {
+    if (localDB[1].members.length === 0) {
+      displayMode_toggler.classList.add("hidden");
+    } else {
+      localDB[1].members.forEach((member) => {
+        const newMembernameOption = document.createElement("option");
+        newMembernameOption.setAttribute("value", member.name);
+        membernames.append(newMembernameOption);
+      });
+    }
   }
 
   if (mode === "admin") {
-    displayMode_toggler.classList.add('hidden');
-    editMode_toggler.classList.add('hidden');
+    displayMode_toggler.classList.add("hidden");
+    editMode_toggler.classList.add("hidden");
   }
 
   const list = document.querySelector("#calendarForm_list");
@@ -132,8 +140,9 @@ function displayCalendar(data, mode) {
     const newItem = document.createElement("li");
     newItem.classList.add("date_item");
     newItem.dataset.day = getDayName(date);
-    newItem.dataset.date = `${date.getFullYear()}-${date.getMonth() + 1
-      }-${date.getDate()}`;
+    newItem.dataset.date = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()}`;
     newItem.innerHTML = `
       <div class="date_item_header">
         <span class="date_number">${date.getDate()}</span>
@@ -187,19 +196,23 @@ function displayCalendar(data, mode) {
         });
         spot.innerHTML = `
         <div class="spot_title">${data.options[item.option]}</div>
-        <div class="spot_no" title="Non disponibles"><img src="./img/no.svg" alt="Non disponibles"> ${members_no.length
-          }
+        <div class="spot_no" title="Non disponibles"><img src="./img/no.svg" alt="Non disponibles"> ${
+          members_no.length
+        }
         <ul class="spot_tooltip"></ul></div>
-        <div class="spot_maybe" title="Participations éventuelles"><img src="./img/maybe.svg" alt="Participations éventuelles"> ${members_maybe.length
-          }
+        <div class="spot_maybe" title="Participations éventuelles"><img src="./img/maybe.svg" alt="Participations éventuelles"> ${
+          members_maybe.length
+        }
         <ul class="spot_tooltip"></ul>
         </div>
-        <div class="spot_yes" title="Participations assurées"><img src="./img/check.svg" alt="Participations assurées"> ${members_yes.length
-          }
+        <div class="spot_yes" title="Participations assurées"><img src="./img/check.svg" alt="Participations assurées"> ${
+          members_yes.length
+        }
         <ul class="spot_tooltip"></ul>
         </div>
-        <div class="spot_total" title="Total des participations possibles"><img src="./img/total.svg" alt="Total des participations possibles"> ${members_total.length
-          }
+        <div class="spot_total" title="Total des participations possibles"><img src="./img/total.svg" alt="Total des participations possibles"> ${
+          members_total.length
+        }
         <ul class="spot_tooltip"></ul>
         </div>
         `;
@@ -263,7 +276,7 @@ const ui_menuList = document.querySelector("#menu ul");
 
 //
 
-ui_menuToggler.addEventListener("click", (e) => { });
+ui_menuToggler.addEventListener("click", (e) => {});
 
 ui_initialForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -326,9 +339,9 @@ function initNewCalendar(data, mode) {
     data.id = `_REU${now.getFullYear()}${(now.getMonth() + 1)
       .toString()
       .padStart(2, "0")}${now
-        .getDate()
-        .toString()
-        .padStart(2, "0")}${generateRandomLetter()}`;
+      .getDate()
+      .toString()
+      .padStart(2, "0")}${generateRandomLetter()}`;
     data.period = getCalendarData(data.start, data.end);
   }
 
@@ -492,12 +505,12 @@ menu.addEventListener("click", (e) => {
   }
 });
 
-displayMode_toggler.addEventListener('click', e => {
+displayMode_toggler.addEventListener("click", (e) => {
   initDisplayMode(currentCalendar);
-})
-editMode_toggler.addEventListener('click', e => {
+});
+editMode_toggler.addEventListener("click", (e) => {
   window.location.reload();
-})
+});
 
 //
 
