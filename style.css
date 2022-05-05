@@ -262,6 +262,19 @@ body[data-mode="loading"] #ui_main {
   visibility: hidden;
 }
 
+#backToTop {
+  display: block;
+  margin: 1.5em auto;
+  width: max-content;
+  color: #0009;
+  padding: .25em .5em;
+}
+
+#backToTop:hover,
+#backToTop:focus {
+  color: #111;
+}
+
 section {
   height: 100%;
   position: relative;
@@ -387,6 +400,10 @@ form button[type="submit"] {
 }
 
 /* Calendar */
+#calendarForm {
+  scroll-margin-top: 10em;
+}
+
 .month_title {
   color: #333;
   scroll-margin-top: 4em;
