@@ -555,22 +555,29 @@ display_filter_total.addEventListener("change", (e) => {
 });
 
 // Detect existing username
-username_input.addEventListener("keyup", (e) => {
+username_input.addEventListener("change", (e) => {
   const value = username_input.value;
   const existingMember = currentCalendar.members.find(
     (member) => member.name === value
   );
 
   if (existingMember) {
-    console.log(existingMember);
-    existingMember.selection.forEach((item) => {
-      item.options.forEach((el) => {
-        const checkbox = ui_calendarForm.querySelector(
-          `input[data-id="${item.date.replaceAll("-", "_")}_${el.option}"]`
-        );
-        checkbox.checked = true;
-        checkbox.dataset.state = el.state;
-      });
-    });
+    if (
+      window.confirm(
+        `En poursuivant, vous allez éditer les disponibilités de l'utilisateur existant : ${value}.`
+      )
+    ) {
+      {
+        existingMember.selection.forEach((item) => {
+          item.options.forEach((el) => {
+            const checkbox = ui_calendarForm.querySelector(
+              `input[data-id="${item.date.replaceAll("-", "_")}_${el.option}"]`
+            );
+            checkbox.checked = true;
+            checkbox.dataset.state = el.state;
+          });
+        });
+      }
+    }
   }
 });
