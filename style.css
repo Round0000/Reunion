@@ -759,12 +759,12 @@ repeating-linear-gradient(135deg,
 .spot_tooltip {
   position: absolute;
   z-index: 20;
-  top: 90%;
+  top: 100%;
   left: 0;
   min-width: 100%;
   height: max-content;
   background-color: inherit;
-  border: 1px solid #0003;
+  border: 1px solid #0008;
   border-top: 1px dashed #0005;
   padding: .25em;
   font-size: .9em;
@@ -772,7 +772,6 @@ repeating-linear-gradient(135deg,
   pointer-events: none;
   transition: all .2s;
   box-shadow: 2px 3px 4px #0003;
-  border-left: 4px solid #0008;
   padding-left: calc(.75em - 4px);
 }
 
@@ -796,7 +795,6 @@ repeating-linear-gradient(135deg,
 .display_spots > li div:hover .spot_tooltip {
   pointer-events: all;
   opacity: 1;
-  top: 100%;
 }
 
 
