@@ -697,6 +697,7 @@ body[data-mode="edit"] #username_label {
   grid-template-columns: repeat(4, 1fr);
   background-color: #fff9;
   border: 1px solid #0003;
+  position: relative;
 }
 
 .display_spots > li+li {
@@ -708,7 +709,6 @@ body[data-mode="edit"] #username_label {
   display: flex;
   align-items: center;
   gap: .25em;
-  position: relative;
 }
 
 .display_spots li img {
@@ -759,7 +759,7 @@ repeating-linear-gradient(135deg,
 .spot_tooltip {
   position: absolute;
   z-index: 20;
-  top: 0;
+  top: 90%;
   left: 0;
   min-width: 100%;
   height: max-content;
@@ -771,9 +771,18 @@ repeating-linear-gradient(135deg,
   opacity: 0;
   pointer-events: none;
   transition: all .2s;
-  box-shadow: 2px 2px 3px #0003;
+  box-shadow: 2px 3px 4px #0003;
   border-left: 4px solid #0008;
   padding-left: calc(.75em - 4px);
+}
+
+.spot_tooltip li {
+  list-style: square;
+  margin-left: 1em;
+}
+
+.spot_tooltip li::marker {
+  color: #0008;
 }
 
 .spot_tooltip:empty {
