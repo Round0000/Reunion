@@ -170,7 +170,7 @@ function displayCalendar(data, mode) {
           }
         }
 
-        input.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
+        input.dataset.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
         const label = document.createElement("label");
         label.setAttribute("for", input.id);
         label.innerText = data.options[i] || "test";
@@ -554,7 +554,23 @@ display_filter_total.addEventListener("change", (e) => {
   });
 });
 
-//
-//
-//
-// header.append(getMonthName(new Date()));
+// Detect existing username
+username_input.addEventListener("keyup", (e) => {
+  const value = username_input.value;
+  const existingMember = currentCalendar.members.find(
+    (member) => member.name === value
+  );
+
+  if (existingMember) {
+    console.log(existingMember);
+    existingMember.selection.forEach((item) => {
+      item.options.forEach((el) => {
+        const checkbox = ui_calendarForm.querySelector(
+          `input[data-id="${item.date.replaceAll("-", "_")}_${el.option}"]`
+        );
+        checkbox.checked = true;
+        checkbox.dataset.state = el.state;
+      });
+    });
+  }
+});
