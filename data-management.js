@@ -54,6 +54,26 @@ function storeMemberCal(memberData) {
   });
 }
 
+//
+function updateMemberCal(memberData) {
+  const existingMembers = currentCalendar.members;
+  const member = existingMembers.find((el) => el.name === memberData.name);
+  const index = existingMembers.indexOf(member);
+
+  existingMembers.splice(index, 1);
+  existingMembers.push(memberData);
+
+  console.log(memberData);
+
+  console.log(existingMembers);
+
+  collection.doc("selection").update({
+    members: existingMembers,
+  });
+}
+
+//
+
 function firestoreToCalendar(items, id) {
   const obj = { id: id };
 

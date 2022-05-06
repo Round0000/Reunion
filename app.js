@@ -1,4 +1,5 @@
 let currentCalendar = {};
+let currentMember;
 
 linkHome.href = window.location.origin;
 
@@ -19,6 +20,7 @@ function setMaxEndDate(startDate) {
     "max",
     getInputDateFormat(new Date(maxDate.setMonth(maxDate.getMonth() + 5)))
   );
+  new_end.setAttribute("min", getInputDateFormat(new Date(startDate)));
 }
 setMaxEndDate(startDate);
 new_start.value = getInputDateFormat(startDate);
@@ -171,8 +173,9 @@ function displayCalendar(data, mode) {
         }
 
         input.dataset.id = `${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
+        input.id = `input_${newItem.dataset.date.replaceAll("-", "_")}_${i}`;
         const label = document.createElement("label");
-        label.setAttribute("for", input.id);
+        label.setAttribute("for", "input_" + input.dataset.id);
         label.innerText = data.options[i] || "test";
         div.append(input, label);
         optionsBox.append(div);
@@ -371,10 +374,17 @@ function submitNewCalendar(cal, selection, mode) {
   if (mode === "admin") {
     storeBaseCal(finalCal);
   } else if (mode === "edit") {
-    storeMemberCal({
-      selection: selection,
-      name: username_input.value.trim(),
-    });
+    if (currentMember) {
+      updateMemberCal({
+        selection: selection,
+        name: currentMember.name,
+      });
+    } else {
+      storeMemberCal({
+        selection: selection,
+        name: username_input.value.trim(),
+      });
+    }
   }
 
   transitionTo(section_newCalendarCheckout);
@@ -410,13 +420,13 @@ ui_calendarForm.addEventListener("submit", (e) => {
       item.querySelectorAll("input:checked").forEach((el) => {
         if (mode === "admin") {
           obj.options.push({
-            option: parseInt(el.id.split("_")[3]),
+            option: parseInt(el.dataset.id.split("_")[3]),
             members_yes: [],
             members_maybe: [],
           });
         } else if (mode === "edit") {
           obj.options.push({
-            option: parseInt(el.id.split("_")[3]),
+            option: parseInt(el.dataset.id.split("_")[3]),
             state: el.dataset.state,
           });
         }
@@ -567,17 +577,19 @@ username_input.addEventListener("change", (e) => {
         `En poursuivant, vous allez éditer les disponibilités de l'utilisateur existant : ${value}.`
       )
     ) {
-      {
-        existingMember.selection.forEach((item) => {
-          item.options.forEach((el) => {
-            const checkbox = ui_calendarForm.querySelector(
-              `input[data-id="${item.date.replaceAll("-", "_")}_${el.option}"]`
-            );
-            checkbox.checked = true;
-            checkbox.dataset.state = el.state;
-          });
+      existingMember.selection.forEach((item) => {
+        item.options.forEach((el) => {
+          const checkbox = ui_calendarForm.querySelector(
+            `input[data-id="${item.date.replaceAll("-", "_")}_${el.option}"]`
+          );
+          checkbox.checked = true;
+          checkbox.dataset.state = el.state;
         });
-      }
+      });
+
+      currentMember = existingMember;
     }
+  } else {
+    currentMember = null;
   }
 });
