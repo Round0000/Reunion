@@ -3,10 +3,11 @@ let reunionID;
 const localDB = [];
 let collection;
 
+console.log
+
 if (reunionQuery[1] === "_") {
   document.body.dataset.mode = "loading";
-
-  reunionID = reunionQuery.slice(1);
+  reunionID = reunionQuery.slice(1, 16);
 
   collection = db.collection(reunionID);
 
