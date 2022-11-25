@@ -115,6 +115,7 @@ function displayCalendar(data, mode) {
 
           currentMember = member;
           username_input.value = member.name;
+          username_input.disabled = true;
         })
         existing_members.append(btn);
       });
