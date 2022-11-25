@@ -38,6 +38,11 @@
         </button>
         <nav id="menu">
           <ul></ul>
+          <div class="existing_members_area">
+            <p>Editer les disponibilités d'un utilisateur existant : </p>
+          <div id="existing_members">
+          </div>
+          </div>
         </nav>
       </div>
     </header>
@@ -112,20 +117,21 @@
             <div id="public_form_details">
               <h3 id="public_form_title">Répètes Eusebes</h3>
               <p id="public_form_period">Du 22.03.2022 au 19.04.2022</p>
-              <label id="username_label">
-                <input
-                  type="text"
-                  placeholder="Votre nom"
-                  autocomplete="off"
-                  list="membernames"
-                  id="username_input"
-                  name="username"
-                  maxlength="20"
-                />
-                <datalist id="membernames"> </datalist>
-              </label>
+              <div class="username_box">
+                <label id="username_label">
+                  <input
+                    type="text"
+                    placeholder="Votre nom"
+                    autocomplete="off"
+                    list="membernames"
+                    id="username_input"
+                    name="username"
+                    maxlength="20"
+                  />
+                </label>
+              </div>
               <button type="button" class="mode_toggler" id="editMode_toggler">
-                Passer en mode édition
+                Passer en mode Edition
               </button>
               <button
                 type="button"

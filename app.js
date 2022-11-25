@@ -88,9 +88,35 @@ function displayCalendar(data, mode) {
       displayMode_toggler.classList.add("hidden");
     } else {
       localDB[1].members.forEach((member) => {
-        const newMembernameOption = document.createElement("option");
-        newMembernameOption.setAttribute("value", member.name);
-        membernames.append(newMembernameOption);
+        // Add button to menu for existing users
+        const btn = document.createElement('button');
+        btn.innerText = member.name;
+        btn.href = '#'
+        btn.addEventListener('click', e => {
+          if (
+            !window.confirm(
+              `En poursuivant, vous allez éditer les disponibilités de l'utilisateur existant : ${member.name}.`
+            )
+          ) return;
+          document.querySelectorAll(".date_item input").forEach((inp) => {
+            if (inp.disabled) return;
+            inp.checked = false;
+            inp.dataset.state = "null";
+          });
+          member.selection.forEach((item) => {
+            item.options.forEach((el) => {
+              const checkbox = ui_calendarForm.querySelector(
+                `input[data-id="${item.date.replaceAll("-", "_")}_${el.option}"]`
+              );
+              checkbox.checked = true;
+              checkbox.dataset.state = el.state;
+            });
+          });
+
+          currentMember = member;
+          username_input.value = member.name;
+        })
+        existing_members.append(btn);
       });
     }
   }
@@ -562,34 +588,4 @@ display_filter_total.addEventListener("change", (e) => {
       item.classList.add("hidden");
     }
   });
-});
-
-// Detect existing username
-username_input.addEventListener("change", (e) => {
-  const value = username_input.value;
-  const existingMember = currentCalendar.members.find(
-    (member) => member.name === value
-  );
-
-  if (existingMember) {
-    if (
-      window.confirm(
-        `En poursuivant, vous allez éditer les disponibilités de l'utilisateur existant : ${value}.`
-      )
-    ) {
-      existingMember.selection.forEach((item) => {
-        item.options.forEach((el) => {
-          const checkbox = ui_calendarForm.querySelector(
-            `input[data-id="${item.date.replaceAll("-", "_")}_${el.option}"]`
-          );
-          checkbox.checked = true;
-          checkbox.dataset.state = el.state;
-        });
-      });
-
-      currentMember = existingMember;
-    }
-  } else {
-    currentMember = null;
-  }
 });
