@@ -239,6 +239,10 @@ button:active {
   gap: 1em;
 }
 
+body[data-mode="display"] .existing_members_area {
+  display: none !important;
+}
+
 #existing_members button {
   padding: .5em 1em;
   height: auto;
@@ -703,41 +707,20 @@ section.hidden #calendarForm_actions {
   color: #333;
 }
 
-.username_box {
-  display: flex;
-  align-items: center;
+#username_label {
   background-color: #5551;
   box-shadow: inset 1px 1px 2px #0003;
-  margin-top: 1em;
-  padding: .5em .75em;
-}
-
-.username_box button {
-  all: unset;
-  height: 2em;
-  width: 2em;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #0005;
-  border-radius: 6px;
-  margin-left: 1em;
-  box-shadow: 1px 1px 2px #0005;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.username_box button img {
-  width: 16px;
-  height: 16px;
-}
-
-#username_label {
   display: none;
   /* border-top: 1px solid #0005; */
   flex: 1;
   max-width: 100%;
+  padding: .5em;
+  margin-top: 1em;
+}
+
+#username_label input {
+  max-width: 18em;
+  margin: auto;
 }
 
 body[data-mode="edit"] #username_label {
