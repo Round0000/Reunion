@@ -428,11 +428,15 @@ calendarForm_actions
       public_form_details.scrollIntoView();
     }
   });
-
-ui_calendarForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const mode = ui_body.dataset.mode;
+  
+  ui_calendarForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    const mode = ui_body.dataset.mode;
+    
+  if (mode === "edit" && localDB[1].members.findIndex(m => m.name === username_input.value.trim()) > -1) {
+    return alert('Le nom ' + username_input.value.trim() + ' est déjà utilisé dans ce calendrier.');
+  }
 
   const dates = e.target.querySelectorAll(".date_item");
   const selection = [];
