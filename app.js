@@ -304,9 +304,21 @@ const ui_initialFormOptions = section_createNewCalendar.querySelector(
 const ui_menuToggler = document.getElementById("menu_toggler");
 const ui_menuList = document.querySelector("#menu ul");
 
+const ui_help_button = document.querySelector('.help_button');
+const ui_help_section = document.querySelector('.help_section')
+const ui_close_help_button = document.querySelector('.close_help_section');
+
+
 //
 
-ui_menuToggler.addEventListener("click", (e) => {});
+ui_help_button.addEventListener('click', e => {
+  ui_help_section.classList.remove('hidden');
+  ui_main.classList.add('hidden')
+})
+ui_close_help_button.addEventListener('click', e => {
+  ui_help_section.classList.add('hidden');
+  ui_main.classList.remove('hidden')
+})
 
 ui_initialForm.addEventListener("submit", (e) => {
   e.preventDefault();
