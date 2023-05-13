@@ -24,6 +24,7 @@ function setMaxEndDate(startDate) {
 }
 setMaxEndDate(startDate);
 new_start.value = getInputDateFormat(startDate);
+new_start.setAttribute('min', new_start.value);
 new_start.addEventListener("change", (e) => {
   startDate = new Date(new_start.value);
   setMaxEndDate(startDate);
@@ -337,7 +338,7 @@ ui_initialForm.addEventListener("submit", (e) => {
   });
 
   if (data.options.length === 0) {
-    data.options.push("Test");
+    return alert("Définissez au moins un créneau de réunion.")
   }
 
   initNewCalendar(data, "admin");
