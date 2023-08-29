@@ -1,5 +1,6 @@
 let currentCalendar = {};
 let currentMember;
+let newMember = true;
 
 linkHome.href = window.location.origin;
 
@@ -115,6 +116,7 @@ function displayCalendar(data, mode) {
           });
 
           currentMember = member;
+          newMember = false;
           username_input.value = member.name;
           username_input.disabled = true;
         })
@@ -447,7 +449,7 @@ calendarForm_actions
     
     const mode = ui_body.dataset.mode;
     
-  if (mode === "edit" && localDB[1].members.findIndex(m => m.name === username_input.value.trim()) > -1) {
+  if (mode === "edit" && localDB[1].members.findIndex(m => m.name === username_input.value.trim()) > -1 && newMember) {
     return alert('Le nom ' + username_input.value.trim() + ' est déjà utilisé dans ce calendrier.');
   }
 
